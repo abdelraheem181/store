@@ -1,6 +1,16 @@
 <?php
 
+use App\Http\Controllers\AboutController;
+use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ShopCartController;
+use App\Http\Controllers\ShopController;
+use App\Http\Controllers\ShopDetailsController;
+use App\Http\Controllers\ShopListController;
+use App\Http\Controllers\TeamController;
+use App\Http\Controllers\TeamDetailsController;
+use App\Http\Controllers\WishListController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,8 +25,40 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
-});
+    return view('website.index');
+})->name('website.index');
+
+// contact route
+Route::get('/contact', [ContactController::class, 'index'])->name('website.contact');
+
+// about route
+Route::get('/about', [AboutController::class, 'index'])->name('website.about');
+
+// shop route
+Route::get('/shop', [ShopController::class, 'index'])->name('website.shop');
+
+//checkout route
+Route::get('/checkout', [CheckoutController::class, 'index'])->name('website.checkout');
+
+//shop list route
+Route::get('/shop-list', [ShopListController::class, 'index'])->name('website.shop-list');
+
+//shop details route
+Route::get('/shop-details', [ShopDetailsController::class, 'index'])->name('website.shop-details');
+
+//shop cart route
+Route::get('/shop-cart', [ShopCartController::class, 'index'])->name('website.shop-cart');
+
+//wishlist route
+Route::get('/wishlist', [WishListController::class, 'index'])->name('website.wishlist');
+
+//team details route
+Route::get('/team-details', [TeamDetailsController::class, 'index'])->name('website.team-details');
+
+//team route
+Route::get('/team', [TeamController::class, 'index'])->name('website.team');
+
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');
