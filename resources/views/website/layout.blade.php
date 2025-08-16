@@ -209,7 +209,7 @@
                                       <div class="main-menu">
                                           <nav id="mobile-menu">
                                               <ul>
-                                                  <li>
+                                                  {{-- <li>
                                                       <a href="index.html">
                                                           Home
                                                           <i class="fas fa-angle-down"></i>
@@ -218,7 +218,12 @@
                                                           <li><a href="index.html">Home 01</a></li>
                                                           <li><a href="{{ route('website.index') }}">Home 02</a></li>
                                                       </ul>
+                                                  </li> --}}
+                                              
+                                                  <li>
+                                                    <a href="{{ route('website.index') }}">Home</a>
                                                   </li>
+
                                                   <li>
                                                       <a href="{{ route('website.shop') }}">
                                                           Shop
@@ -235,20 +240,14 @@
                                                   </li>
                                                   <li class="has-dropdown">
                                                       <a href="{{ route('website.about') }}">
-                                                          Pages
+                                                        Authors
                                                           <i class="fas fa-angle-down"></i>
                                                       </a>
-                                                      <ul class="submenu">
-                                                          <li><a href="{{ route('website.about') }}">About Us</a></li>
-                                                          <li class="has-dropdown">
-                                                              <a href="{{ route('website.team') }}">
-                                                                  Author
-                                                                  <i class="fas fa-angle-down"></i>
-                                                              </a>
-                                                              <ul class="submenu">
+                                                       <ul class="submenu">
+ 
                                                                   <li><a href="{{ route('website.team') }}">Author</a></li>
                                                                   <li><a href="{{ route('website.team-details') }}">Author Profile</a></li>
-                                                              </ul>
+                                                        
                                                           </li>
                                                     
                                                       </ul>
@@ -267,6 +266,11 @@
                                                   <li>
                                                       <a href="{{ route('website.contact') }}">Contact</a>
                                                   </li>
+                                                  <li>
+                                                    <a href="{{ route('website.about') }}">About Us</a>
+                                                  </li>
+                                               
+                                                
                                               </ul>
                                           </nav>
                                       </div>
