@@ -246,7 +246,7 @@
                                                        <ul class="submenu">
  
                                                                   <li><a href="{{ route('website.team') }}">Author</a></li>
-                                                                  <li><a href="{{ route('website.team-details') }}">Author Profile</a></li>
+                                                                  <li><a href="{{ route('website.team-details') }}">Author Profile2</a></li>
                                                         
                                                           </li>
                                                     
