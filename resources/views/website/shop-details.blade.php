@@ -37,85 +37,48 @@
       <div class="container">
           <div class="shop-details-wrapper">
               <div class="row g-4">
-                  <div class="col-lg-5">
+                  <div class="col-lg-3">
                       <div class="shop-details-image">
                           <div class="tab-content">
-                              <div id="thumb1" class="tab-pane fade show active">
-                                  <div class="shop-details-thumb">
-                                      <img src="{{ asset('img/shop-details/01.png') }}" alt="img">
-                                  </div>
-                              </div>
-                              <div id="thumb2" class="tab-pane fade">
-                                  <div class="shop-details-thumb">
-                                      <img src="{{ asset('img/shop-details/02.png') }}" alt="img">
-                                  </div>
-                              </div>
-                              <div id="thumb3" class="tab-pane fade">
-                                  <div class="shop-details-thumb">
-                                      <img src="{{ asset('img/shop-details/03.png') }}" alt="img">
-                                  </div>
-                              </div>
-                              <div id="thumb4" class="tab-pane fade">
-                                  <div class="shop-details-thumb">
-                                      <img src="{{ asset('img/shop-details/04.png') }}" alt="img">
-                                  </div>
-                              </div>
-                              <div id="thumb5" class="tab-pane fade">
-                                  <div class="shop-details-thumb">
-                                      <img src="{{ asset('img/shop-details/05.png') }}" alt="img">
-                                  </div>
-                              </div>
+                            <div id="thumb1" class="tab-pane fade show active">
+                                <div class="shop-details-thumb">
+                                    <img src="{{ asset('images/books/' .$book->basic_image_path)  }}" alt="img" width="315">
+                                </div>
+                            </div>
+                    
                           </div>
+                 
+              
                           <ul class="nav">
-                              <li class="nav-item">
-                                  <a href="#thumb1" data-bs-toggle="tab" class="nav-link active">
-                                      <img src="{{ asset('img/shop-details/sm-1.png') }}" alt="img">
-                                  </a>
-                              </li>
-                              <li class="nav-item">
-                                  <a href="#thumb2" data-bs-toggle="tab" class="nav-link">
-                                      <img src="{{ asset('img/shop-details/sm-2.png') }}" alt="img">
-                                  </a>
-                              </li>
-                              <li class="nav-item">
-                                  <a href="#thumb3" data-bs-toggle="tab" class="nav-link">
-                                      <img src="{{ asset('img/shop-details/sm-3.png') }}" alt="img">
-                                  </a>
-                              </li>
-                              <li class="nav-item">
-                                  <a href="#thumb4" data-bs-toggle="tab" class="nav-link">
-                                      <img src="{{ asset('img/shop-details/sm-4.png') }}" alt="img">
-                                  </a>
-                              </li>
-                              <li class="nav-item">
-                                  <a href="#thumb5" data-bs-toggle="tab" class="nav-link">
-                                                <img src="{{ asset('img/shop-details/sm-5.png') }}" alt="img">
-                                  </a>
-                              </li>
+                                @foreach ($book->images as $image )
+                                <li class="nav-item">
+                                    <a href="#thumb1" data-bs-toggle="tab" class="nav-link active">
+                                        <img src="{{ asset($image->image_path) }}" alt="img" width="74">
+                                    </a>
+                                </li> 
+                                @endforeach
                           </ul>
                       </div>
+                  
                   </div>
                   <div class="col-lg-7">
                       <div class="shop-details-content">
                           <div class="title-wrapper">
-                              <h2>Castle The Sky</h2>
+                              <h2>{{ $book->getTranslation('name', 'en') }}</h2>
                               <h5>Stock availability.</h5>
                           </div>
                           <div class="star">
                                     <a href="{{ route('website.shop-details') }}"> <i class="fas fa-star"></i></a>
                               <a href="{{ route('website.shop-details') }}"><i class="fas fa-star"></i></a>
                               <a href="{{ route('website.shop-details') }}"> <i class="fas fa-star"></i></a>
-                              <a href="shop-details.html"><i class="fa-regular fa-star"></i></a>
+                              <a href="{{ route('website.shop-details') }}"><i class="fa-regular fa-star"></i></a>
                               <span>(1 Customer Reviews)</span>
                           </div>
                           <p>
-                              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec pulvinar, tortor quis
-                              varius pretium est felis scelerisque nulla, vitae placerat justo nunc a massa. Aenean
-                              nec montes vestibulum urna vel imperdiet ipsum. Orci varius natoque penatibus et magnis
-                              dis ridicul parturient montes.
+                           {{ $book->description }}
                           </p>
                           <div class="price-list">
-                              <h3>$16.00</h3>
+                              <h3>{{ $book->price }} $</h3>
                           </div>
                           <div class="cart-wrapper">
                               <div class="quantity-basket">
@@ -172,34 +135,34 @@
                               <div class="category-list">
                                   <ul>
                                       <li>
-                                          <span>SKU:</span> FTC1020B65D
+                                          <span>SKU:</span> {{ $book->isbn }}
                                       </li>
                                       <li>
-                                          <span>Category:</span> Kids Toys
-                                      </li>
-                                  </ul>
-                                  <ul>
-                                      <li>
-                                          <span>Tags:</span> Design Low Book
-                                      </li>
-                                      <li>
-                                          <span>Format:</span> Hardcover
+                                          <span>Category:</span> {{ $book->category->name }}
                                       </li>
                                   </ul>
                                   <ul>
                                       <li>
-                                          <span>Total page:</span> 330
+                                          <span>Tags:</span> {{ $book->tags }}
                                       </li>
                                       <li>
-                                          <span>Language:</span> English
+                                          <span>Format:</span> {{ $book->format }}
                                       </li>
                                   </ul>
                                   <ul>
                                       <li>
-                                          <span>Publish Years:</span> 2021
+                                          <span>Total page:</span> {{ $book->pages }}
                                       </li>
                                       <li>
-                                          <span>Century:</span> United States
+                                          <span>Language:</span> {{ $book->language }}
+                                      </li>
+                                  </ul>
+                                  <ul>
+                                      <li>
+                                          <span>Publish Years:</span> {{ $book->publish_year }}
+                                      </li>
+                                      <li>
+                                          <span>Century:</span> {{ $book->country->name }}
                                       </li>
                                   </ul>
                               </div>
@@ -237,6 +200,7 @@
                       </div>
                   </div>
               </div>
+  
               <div class="single-tab section-padding pb-0">
                   <ul class="nav mb-5" role="tablist">
                       <li class="nav-item" role="presentation">
@@ -262,19 +226,7 @@
                       <div id="description" class="tab-pane fade show active" role="tabpanel">
                           <div class="description-items">
                               <p>
-                                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque quis erat
-                                  interdum, tempor turpis in, sodales ex. In hac habitasse platea dictumst. Etiam
-                                  accumsan scelerisque urna, a lobortis velit vehicula ut. Maecenas porttitor dolor a
-                                  velit aliquet, et euismod nibh vulputate. Duis nunc velit, lacinia vel risus in,
-                                  finibus sodales augue. Aliquam lacinia imperdiet dictum. Etiam tempus finibus
-                                  tortor, quis placerat arcu tristique in. Sed vitae dui a diam luctus maximus.
-                                  Quisque nec felis dapibus, dapibus enim vitae, vestibulum libero. Aliquam erat
-                                  volutpat. Phasellus luctus rhoncus justo. Duis a nulla sit amet justo aliquam
-                                  ullamcorper. Phasellus nulla lorem, pretium et libero in, porta auctor dui. In a
-                                  ornare purus, et efficitur elit. Etiam consectetur sit amet quam ut tincidunt. Donec
-                                  gravida ultricies tellus ac pharetra.
-                                  Praesent a pulvinar purus. Proin sollicitudin leo eget mi sagittis aliquam. Donec
-                                  sollicitudin ex ac lobortis mollis. Sed eget libero nec mi
+                                {{ $book->description }}
                               </p>
                           </div>
                       </div>
@@ -288,27 +240,27 @@
                                       </tr>
                                       <tr>
                                           <td class="text-1">Categories</td>
-                                          <td class="text-2">Adventure</td>
+                                          <td class="text-2"> {{ $book->category->name }}</td>
                                       </tr>
                                       <tr>
                                           <td class="text-1">Publish Date</td>
-                                          <td class="text-2">2022-10-24</td>
+                                          <td class="text-2"> {{ $book->publish_year }}</td>
                                       </tr>
                                       <tr>
                                           <td class="text-1">Total Page</td>
-                                          <td class="text-2">330</td>
+                                          <td class="text-2">{{ $book->pages }}</td>
                                       </tr>
                                       <tr>
                                           <td class="text-1">Format</td>
-                                          <td class="text-2">Hardcover</td>
+                                          <td class="text-2">{{ $book->format }}</td>
                                       </tr>
                                       <tr>
                                           <td class="text-1">Country</td>
-                                          <td class="text-2">United States</td>
+                                          <td class="text-2">{{ $book->country->name }}</td>
                                       </tr>
                                       <tr>
                                           <td class="text-1">Language</td>
-                                          <td class="text-2">English</td>
+                                          <td class="text-2">{{ $book->language }}</td>
                                       </tr>
                                       <tr>
                                           <td class="text-1">Dimensions</td>
@@ -316,7 +268,7 @@
                                       </tr>
                                       <tr>
                                           <td class="text-1">Weight</td>
-                                          <td class="text-2">2.5 Pounds</td>
+                                          <td class="text-2">{{ $book->weight }}</td>
                                       </tr>
                                   </tbody>
                               </table>

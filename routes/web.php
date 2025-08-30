@@ -1,16 +1,16 @@
 <?php
 
-use App\Http\Controllers\AboutController;
-use App\Http\Controllers\CheckoutController;
-use App\Http\Controllers\ContactController;
+use App\Http\Controllers\Website\AboutController;
+use App\Http\Controllers\Website\CheckoutController;
+use App\Http\Controllers\Website\ContactController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\ShopCartController;
-use App\Http\Controllers\ShopController;
-use App\Http\Controllers\ShopDetailsController;
-use App\Http\Controllers\ShopListController;
-use App\Http\Controllers\TeamController;
-use App\Http\Controllers\TeamDetailsController;
-use App\Http\Controllers\WishListController;
+use App\Http\Controllers\Website\ShopCartController;
+use App\Http\Controllers\Website\ShopController;
+use App\Http\Controllers\Website\ShopDetailsController;
+use App\Http\Controllers\Website\ShopListController;
+use App\Http\Controllers\Website\TeamController;
+use App\Http\Controllers\Website\TeamDetailsController;
+use App\Http\Controllers\Website\WishListController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -44,7 +44,7 @@ Route::get('/checkout', [CheckoutController::class, 'index'])->name('website.che
 Route::get('/shop-list', [ShopListController::class, 'index'])->name('website.shop-list');
 
 //shop details route
-Route::get('/shop-details', [ShopDetailsController::class, 'index'])->name('website.shop-details');
+Route::get('/shop-details/{id?}', [ShopDetailsController::class, 'show'])->name('website.shop-details');
 
 //shop cart route
 Route::get('/shop-cart', [ShopCartController::class, 'index'])->name('website.shop-cart');
@@ -60,9 +60,9 @@ Route::get('/team', [TeamController::class, 'index'])->name('website.team');
 
 
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

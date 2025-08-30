@@ -16,7 +16,6 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('category_id');
             $table->unsignedBigInteger('author_id');
-            $table->unsignedBigInteger('image_id');
             $table->unsignedBigInteger('country_id');
             $table->json('name');
             $table->json('description')->nullable();
@@ -24,6 +23,7 @@ return new class extends Migration
             $table->date('published_date')->nullable();
             $table->integer('pages')->nullable();
             $table->string('isbn')->nullable(); 
+            $table->string('basic_image_path')->nullable();
             $table->string('language')->nullable(); 
             $table->string('format')->nullable(); 
             $table->string('weight')->nullable();
@@ -33,7 +33,6 @@ return new class extends Migration
     
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
             $table->foreign('author_id')->references('id')->on('authors')->onDelete('cascade');
-            $table->foreign('image_id')->references('id')->on('book_images')->onDelete('cascade');
             $table->foreign('country_id')->references('id')->on('countries')->onDelete('cascade');
         });
     }

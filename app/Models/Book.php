@@ -4,15 +4,19 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Translatable\HasTranslations;
 
 class Book extends Model
 {
-    use HasFactory;
+    use HasFactory ,HasTranslations;
 
+    //translatable fields
+    public $translatable = ['name', 'description'];
+
+    //fillable fields
     protected $fillable = [
         'category_id',
          'author_id', 
-         'image_id', 
          'country_id',
           'name', 
           'description',
@@ -25,7 +29,7 @@ class Book extends Model
             'weight', 
             'tags', 
             'publish_year',
-            'created_by'
+            'basic_image_path'
         ];
 
     /**
@@ -46,9 +50,9 @@ class Book extends Model
         return $this->belongsTo(Country::class);
     }
 
-    public function image()
+    public function images()
     {
-        return $this->belongsTo(BookImage::class);
+        return $this->hasMany(BookImage::class);
     }
 
     public function orders()

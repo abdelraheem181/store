@@ -209,20 +209,20 @@
                                       <div class="main-menu">
                                           <nav id="mobile-menu">
                                               <ul>
-                                                  {{-- <li>
-                                                      <a href="index.html">
+                                                   <li>
+                                                      <a href="{{ route('website.index') }}">
                                                           Home
                                                           <i class="fas fa-angle-down"></i>
                                                       </a>
                                                       <ul class="submenu">
-                                                          <li><a href="index.html">Home 01</a></li>
-                                                          <li><a href="{{ route('website.index') }}">Home 02</a></li>
+                                                          <li><a href="{{ route('website.index') }}">Home 01</a></li>
+                                                          <li><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
                                                       </ul>
-                                                  </li> --}}
-                                              
-                                                  <li>
+                                                  </li> 
+                                               
+                                                  {{-- <li>
                                                     <a href="{{ route('website.index') }}">Home</a>
-                                                  </li>
+                                                  </li> --}}
 
                                                   <li>
                                                       <a href="{{ route('website.shop') }}">
@@ -232,7 +232,7 @@
                                                       <ul class="submenu">
                                                           <li><a href="{{ route('website.shop') }}">Shop Default</a></li>
                                                           <li><a href="{{ route('website.shop-list') }}">Shop List</a></li>
-                                                          <li><a href="{{ route('website.shop-details') }}">Shop Details</a></li>
+                                                  
                                                           <li><a href="{{ route('website.shop-cart') }}">Shop Cart</a></li>
                                                           <li><a href="{{ route('website.wishlist') }}">Wishlist</a></li>
                                                           <li><a href="{{ route('website.checkout') }}">Checkout</a></li>
@@ -269,6 +269,8 @@
                                                   <li>
                                                     <a href="{{ route('website.about') }}">About Us</a>
                                                   </li>
+
+ 
                                                
                                                 
                                               </ul>
