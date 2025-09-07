@@ -42,106 +42,57 @@
                           <table class="table">
                               <thead>
                                   <tr>
-                                      <th>Product</th>
+                                      <th>Book</th>
                                       <th>Price</th>
                                       <th>Quantity</th>
                                       <th>Subtotal</th>
                                   </tr>
                               </thead>
-                              <tbody>
-                                  <tr>
+                                                            <tbody>
+                                  @forelse($cart as $book_id => $item)
+                                  <tr data-book-id="{{ $book_id }}">
                                       <td>
                                           <span class="d-flex gap-5 align-items-center">
-                                              <a href="{{ route('website.shop-cart') }}" class="remove-icon">
+                                              <button class="remove-icon remove-cart-item" data-book-id="{{ $book_id }}" style="border: none; background: none; cursor: pointer;">
                                                   <img src="{{ asset('img/icon/icon-9.svg') }}" alt="img">
-                                              </a>
-                                              <span class="cart">
-                                                  <img src="{{ asset('img/shop-cart/01.png') }}" alt="img">
-                                              </span>
+                                              </button>
+                                              {{-- <span class="cart">
+                                                  @if($item['image'])
+                                                      <img src="{{ asset($item['image']) }}" alt="{{ $item['image'] }}" width="100" height="100">
+                                                  @else
+                                                      <img src="{{ asset($item['image']) }}" alt="img" width="100" height="100">
+                                                  @endif
+                                              </span> --}}
                                               <span class="cart-title">
-                                                  simple Things You To Save Book
+                                                  {{ $item['name'] }}
                                               </span>
                                           </span>
                                       </td>
                                       <td>
-                                          <span class="cart-price">$30.00</span>
+                                          <span class="cart-price">${{ number_format($item['price'], 2) }}</span>
                                       </td>
                                       <td>
                                           <span class="quantity-basket">
                                               <span class="qty">
-                                                  <button class="qtyminus" aria-hidden="true">−</button>
-                                                  <input type="number" name="qty" id="qty2" min="1" max="10" step="1"
-                                                      value="1">
-                                                  <button class="qtyplus" aria-hidden="true">+</button>
+                                                  <button class="qtyminus" aria-hidden="true" data-book-id="{{ $book_id }}">−</button>
+                                                  <input type="number" name="qty" id="qty-{{ $book_id }}" min="1" max="99" step="1"
+                                                      value="{{ $item['quantity'] }}" data-book-id="{{ $book_id }}">
+                                                  <button class="qtyplus" aria-hidden="true" data-book-id="{{ $book_id }}">+</button>
                                               </span>
                                           </span>
                                       </td>
                                       <td>
-                                          <span class="subtotal-price">$120.00</span>
+                                          <span class="subtotal-price">${{ number_format($item['price'] * $item['quantity'], 2) }}</span>
                                       </td>
                                   </tr>
+                                  @empty
                                   <tr>
-                                      <td>
-                                          <span class="d-flex gap-5 align-items-center">
-                                              <a href="{{ route('website.shop-cart') }}" class="remove-icon">
-                                                  <img src="{{ asset('img/icon/icon-9.svg') }}" alt="img">
-                                              </a>
-                                              <span class="cart">
-                                                  <img src="{{ asset('img/shop-cart/02.png') }}" alt="img">
-                                              </span>
-                                              <span class="cart-title">
-                                                  Qple GPad With Retina Sisplay
-                                              </span>
-                                          </span>
-                                      </td>
-                                      <td>
-                                          <span class="cart-price">$30.00</span>
-                                      </td>
-                                      <td>
-                                          <span class="quantity-basket">
-                                              <span class="qty">
-                                                  <button class="qtyminus" aria-hidden="true">−</button>
-                                                  <input type="number" name="qty" id="qty3" min="1" max="10" step="1"
-                                                      value="1">
-                                                  <button class="qtyplus" aria-hidden="true">+</button>
-                                              </span>
-                                          </span>
-                                      </td>
-                                      <td>
-                                          <span class="subtotal-price">$120.00</span>
+                                      <td colspan="4" class="text-center">
+                                          <p>Your cart is empty</p>
+                                          <a href="{{ route('website.shop') }}" class="theme-btn">Continue Shopping</a>
                                       </td>
                                   </tr>
-                                  <tr>
-                                      <td>
-                                          <span class="d-flex gap-5 align-items-center">
-                                              <a href="{{ route('website.shop-cart') }}" class="remove-icon">
-                                                  <img src="{{ asset('img/icon/icon-9.svg') }}" alt="img">
-                                              </a>
-                                              <span class="cart">
-                                                  <img src="{{ asset('img/shop-cart/03.png') }}" alt="img">
-                                              </span>
-                                              <span class="cart-title">
-                                                  Flovely and Unicom Erna
-                                              </span>
-                                          </span>
-                                      </td>
-                                      <td>
-                                          <span class="cart-price">$30.00</span>
-                                      </td>
-                                      <td>
-                                          <span class="quantity-basket">
-                                              <span class="qty">
-                                                  <button class="qtyminus" aria-hidden="true">−</button>
-                                                  <input type="number" name="qty" id="qty" min="1" max="10" step="1"
-                                                      value="1">
-                                                  <button class="qtyplus" aria-hidden="true">+</button>
-                                              </span>
-                                          </span>
-                                      </td>
-                                      <td>
-                                          <span class="subtotal-price">$120.00</span>
-                                      </td>
-                                  </tr>
+                                  @endforelse
                               </tbody>
                           </table>
                       </div>
@@ -172,7 +123,9 @@
                                       <td>
                                           <span class="d-flex gap-5 align-items-center justify-content-between">
                                               <span class="sub-title">Subtotal:</span>
-                                              <span class="sub-price">$84.00</span>
+                                              <span class="sub-price">
+                                                  ${{ number_format(collect($cart)->sum(function($item) { return $item['price'] * $item['quantity']; }), 2) }}
+                                              </span>
                                           </span>
                                       </td>
                                   </tr>
@@ -190,7 +143,9 @@
                                       <td>
                                           <span class="d-flex gap-5 align-items-center  justify-content-between">
                                               <span class="sub-title">Total:  </span>
-                                              <span class="sub-price sub-price-total">$84.00</span>
+                                              <span class="sub-price sub-price-total">
+                                                  ${{ number_format(collect($cart)->sum(function($item) { return $item['price'] * $item['quantity']; }), 2) }}
+                                              </span>
                                           </span>
                                       </td>
                                   </tr>
@@ -206,3 +161,91 @@
 
 
 @endsection
+
+@push('scripts')
+<script>
+$(document).ready(function() {
+    // Remove cart item
+    $('.remove-cart-item').on('click', function() {
+        const bookId = $(this).data('book-id');
+        const row = $(this).closest('tr');
+        
+        if (confirm('Are you sure you want to remove this item from your cart?')) {
+            $.ajax({
+                url: '{{ route("cart.remove-session", "") }}/' + bookId,
+                method: 'DELETE',
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                success: function(response) {
+                    row.remove();
+                    updateCartBadge(response.cartCount);
+                    updateCartTotals();
+                    
+                    // Check if cart is empty
+                    if (response.cartCount === 0) {
+                        location.reload(); // Reload to show empty cart message
+                    }
+                },
+                error: function() {
+                    alert('Error removing item from cart');
+                }
+            });
+        }
+    });
+
+    // Update quantity
+    $('.qtyminus, .qtyplus').on('click', function() {
+        const bookId = $(this).data('book-id');
+        const input = $('#qty-' + bookId);
+        let currentValue = parseInt(input.val()) || 1;
+        
+        if ($(this).hasClass('qtyminus')) {
+            currentValue = Math.max(currentValue - 1, 1);
+        } else {
+            currentValue = Math.min(currentValue + 1, 99);
+        }
+        
+        input.val(currentValue);
+        updateCartItem(bookId, currentValue);
+    });
+
+    // Update cart item quantity
+    function updateCartItem(bookId, quantity) {
+        $.ajax({
+            url: '{{ route("cart.add", "") }}/' + bookId,
+            method: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+            },
+            data: {
+                quantity: quantity
+            },
+            success: function(response) {
+                updateCartBadge(response.cartCount);
+                updateCartTotals();
+                location.reload(); // Reload to show updated quantities
+            },
+            error: function() {
+                alert('Error updating cart');
+            }
+        });
+    }
+
+    // Update cart totals
+    function updateCartTotals() {
+        let subtotal = 0;
+        $('.subtotal-price').each(function() {
+            const price = parseFloat($(this).text().replace('$', ''));
+            subtotal += price;
+        });
+        
+        $('.sub-price').text('$' + subtotal.toFixed(2));
+        $('.sub-price-total').text('$' + subtotal.toFixed(2));
+    }
+
+    // Initialize cart totals
+    updateCartTotals();
+});
+</script>
+@endpush

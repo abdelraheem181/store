@@ -283,6 +283,17 @@
                                     <div class="invalid-feedback d-block">{{ $message }}</div>
                                 @enderror
                             </div>
+                            <!-- Avl Quantity -->
+                            <div class="col-md-6 mb-3">
+                                <label for="avl_qty" class="form-label fw-semibold">
+                                    <i class="fas fa-quantity me-1 text-success"></i>Avl Quantity
+                                </label>
+                                <input type="number" name="avl_qty" class="form-control form-control-lg" required 
+                                       id="avl_qty" value="{{ $book->avl_qty }}" placeholder="Enter avl quantity">
+                                @error('avl_qty')
+                                    <div class="invalid-feedback d-block">{{ $message }}</div>
+                                @enderror
+                            </div>
 
                             <!-- Publish Year -->
                             <div class="col-md-6 mb-3">

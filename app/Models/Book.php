@@ -29,7 +29,8 @@ class Book extends Model
             'weight', 
             'tags', 
             'publish_year',
-            'basic_image_path'
+            'basic_image_path',
+            'avl_qty'
         ];
 
     /**
@@ -84,10 +85,14 @@ class Book extends Model
         return $this->hasMany(Rating::class);
     }
 
- 
-    
-    
-    
+    public function wishlists()
+    {
+        return $this->hasMany(Wishlist::class);
+    }
 
-  
+    public function wishlistUsers()
+    {
+        return $this->belongsToMany(User::class, 'wishlists')
+                    ->withTimestamps();
+    }
 }

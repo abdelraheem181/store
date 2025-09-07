@@ -2,6 +2,18 @@
 
 @section('content')
 
+    <!-- Test Notification Section (remove after testing) -->
+    {{-- @if(config('app.debug'))
+    <div class="container mt-3">
+        <div class="alert alert-info">
+            <h5>Notification Test (Debug Mode Only)</h5>
+            <p>Click these buttons to test the notification system:</p>
+            <a href="{{ route('test.success') }}" class="btn btn-success me-2">Test Success Message</a>
+            <a href="{{ route('test.error') }}" class="btn btn-danger">Test Error Message</a>
+        </div>
+    </div>
+    @endif --}}
+
     <!-- Hero Section start  -->
     <div class="hero-section hero-2 fix">
       <div class="container">
@@ -62,11 +74,14 @@
                                     </ul>
                                     <ul class="shop-icon d-grid justify-content-center align-items-center">
                                         <li>
-                                            <a href="shop-cart.html"><i class="far fa-heart"></i></a>
+                                            <a href="{{ route('website.wishlist') }}"><i class="far fa-heart"></i></a>
                                         </li>
                                         <li>
-                                            <a href="shop-cart.html">
+                                            <a href="{{ route('website.shop-cart') }}" class="cart-icon">
                                                 <img class="icon" src="{{ asset('img/icon/shuffle.svg') }}" alt="svg-icon">
+                                                @if($cartCount > 0)
+                                                    <span class="cart-badge">{{ $cartCount }}</span>
+                                                @endif
                                             </a>
                                         </li>
                                         <li>
@@ -108,11 +123,14 @@
                                     <a href="shop-details"><img src="{{ asset('img/book/02.png') }}" alt="img"></a>
                                     <ul class="shop-icon d-grid justify-content-center align-items-center">
                                         <li>
-                                            <a href="shop-cart.html"><i class="far fa-heart"></i></a>
+                                            <a href="{{ route('website.wishlist') }}"><i class="far fa-heart"></i></a>
                                         </li>
                                         <li>
-                                            <a href="shop-cart.html">
+                                            <a href="{{ route('website.shop-cart') }}" class="cart-icon">
                                                 <img class="icon" src="{{ asset('img/icon/shuffle.svg') }}" alt="svg-icon">
+                                                @if($cartCount > 0)
+                                                    <span class="cart-badge">{{ $cartCount }}</span>
+                                                @endif
                                             </a>
                                         </li>
                                         <li>
@@ -151,11 +169,14 @@
                                     <a href="shop-details"><img src="{{ asset('img/book/03.png') }}" alt="img"></a>
                                     <ul class="shop-icon d-grid justify-content-center align-items-center">
                                         <li>
-                                            <a href="shop-cart.html"><i class="far fa-heart"></i></a>
+                                            <a href="{{ route('website.wishlist') }}"><i class="far fa-heart"></i></a>
                                         </li>
                                         <li>
-                                            <a href="shop-cart.html">
+                                            <a href="{{ route('website.shop-cart') }}" class="cart-icon">
                                                 <img class="icon" src="{{ asset('img/icon/shuffle.svg') }}" alt="svg-icon">
+                                                @if($cartCount > 0)
+                                                    <span class="cart-badge">{{ $cartCount }}</span>
+                                                @endif
                                             </a>
                                         </li>
                                         <li>
@@ -201,11 +222,14 @@
                                     </ul>
                                     <ul class="shop-icon d-grid justify-content-center align-items-center">
                                         <li>
-                                            <a href="shop-cart.html"><i class="far fa-heart"></i></a>
+                                            <a href="{{ route('website.wishlist') }}"><i class="far fa-heart"></i></a>
                                         </li>
                                         <li>
-                                            <a href="shop-cart.html">
+                                            <a href="{{ route('website.shop-cart') }}" class="cart-icon">
                                                 <img class="icon" src="{{ asset('img/icon/shuffle.svg') }}" alt="svg-icon">
+                                                @if($cartCount > 0)
+                                                    <span class="cart-badge">{{ $cartCount }}</span>
+                                                @endif
                                             </a>
                                         </li>
                                         <li>
@@ -244,11 +268,14 @@
                                     <a href="shop-details"><img src="{{ asset('img/book/05.png') }}" alt="img"></a>
                                     <ul class="shop-icon d-grid justify-content-center align-items-center">
                                         <li>
-                                            <a href="shop-cart.html"><i class="far fa-heart"></i></a>
+                                            <a href="{{ route('website.wishlist') }}"><i class="far fa-heart"></i></a>
                                         </li>
                                         <li>
-                                            <a href="shop-cart.html">
+                                            <a href="{{ route('website.shop-cart') }}" class="cart-icon">
                                                 <img class="icon" src="{{ asset('img/icon/shuffle.svg') }}" alt="svg-icon">
+                                                @if($cartCount > 0)
+                                                    <span class="cart-badge">{{ $cartCount }}</span>
+                                                @endif
                                             </a>
                                         </li>
                                         <li>
@@ -318,7 +345,7 @@
                               <ul class="author-post">
                                     <li class="authot-list">
                                           <span class="thumb">
-                                          <img src="{{ asset('img/testimonial/client-1.png') }}" alt="img">
+                                          <img src="{{ asset('img/testimonial/client-5.png') }}" alt="img">
                                           </span>
                                           <span class="content">Wilson</span>
                                     </li>
@@ -337,7 +364,7 @@
                                           <p>25 Books in stock</p>
                                     </div>
                                     <div class="shop-btn">
-                                          <a href="shop-cart.html">
+                                          <a href="{{ route('website.shop-cart') }}">
                                           <i class="fa-regular fa-basket-shopping"></i>
                                           </a>
                                     </div>
@@ -387,7 +414,7 @@
                                           <p>25 Books in stock</p>
                                     </div>
                                     <div class="shop-btn">
-                                          <a href="shop-cart.html">
+                                          <a href="{{ route('website.shop-cart') }}">
                                           <i class="fa-regular fa-basket-shopping"></i>
                                           </a>
                                     </div>
@@ -437,7 +464,7 @@
                                           <p>25 Books in stock</p>
                                     </div>
                                     <div class="shop-btn">
-                                          <a href="shop-cart.html">
+                                          <a href="{{ route('website.shop-cart') }}">
                                           <i class="fa-regular fa-basket-shopping"></i>
                                           </a>
                                     </div>
@@ -487,7 +514,7 @@
                                           <p>25 Books in stock</p>
                                     </div>
                                     <div class="shop-btn">
-                                          <a href="shop-cart.html">
+                                          <a href="{{ route('website.shop-cart') }}">
                                           <i class="fa-regular fa-basket-shopping"></i>
                                           </a>
                                     </div>
@@ -537,7 +564,7 @@
                                           <p>25 Books in stock</p>
                                     </div>
                                     <div class="shop-btn">
-                                          <a href="shop-cart.html">
+                                          <a href="{{ route('website.shop-cart') }}">
                                           <i class="fa-regular fa-basket-shopping"></i>
                                           </a>
                                     </div>

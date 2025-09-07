@@ -89,43 +89,23 @@
                             <h5>Categories</h5>
                         </div>
                         <div class="categories-list">
+
+
+
                             <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+
+                                <!-- loop through categories -->
+                                @foreach ($category as $item)
                                 <li class="nav-item" role="presentation">
-                                    <button class="nav-link active" id="pills-arts-tab" data-bs-toggle="pill"
-                                        data-bs-target="#pills-arts" type="button" role="tab"
-                                        aria-controls="pills-arts" aria-selected="true">Arts &
-                                        Photography</button>
+                                    <button class="nav-link" id="pills-{{ $item->id }}-tab" data-bs-toggle="pill"
+                                        data-bs-target="#pills-{{ $item->id }}" type="button" role="tab"
+                                                aria-controls="pills-{{ $item->id }}" aria-selected="true">
+                                                {{ $item->name }}
+                                        </button>
                                 </li>
-                                <li class="nav-item" role="presentation">
-                                    <button class="nav-link" id="pills-Biographies-tab" data-bs-toggle="pill"
-                                        data-bs-target="#pills-Biographies" type="button" role="tab"
-                                        aria-controls="pills-Biographies" aria-selected="false">Biographies &
-                                        Memoirs</button>
-                                </li>
-                                <li class="nav-item" role="presentation">
-                                    <button class="nav-link" id="pills-ChristianBooks-tab" data-bs-toggle="pill"
-                                        data-bs-target="#pills-ChristianBooks" type="button" role="tab"
-                                        aria-controls="pills-ChristianBooks" aria-selected="false">Christian
-                                        Books & Bibles</button>
-                                </li>
-                                <li class="nav-item" role="presentation">
-                                    <button class="nav-link" id="pills-ResearchPublishing-tab"
-                                        data-bs-toggle="pill" data-bs-target="#pills-ResearchPublishing"
-                                        type="button" role="tab" aria-controls="pills-ResearchPublishing"
-                                        aria-selected="false">Research & Publishing Guides</button>
-                                </li>
-                                <li class="nav-item" role="presentation">
-                                    <button class="nav-link" id="pills-SportsOutdoors-tab" data-bs-toggle="pill"
-                                        data-bs-target="#pills-SportsOutdoors" type="button" role="tab"
-                                        aria-controls="pills-SportsOutdoors" aria-selected="false">Sports &
-                                        Outdoors</button>
-                                </li>
-                                <li class="nav-item" role="presentation">
-                                    <button class="nav-link" id="pills-FoodDrink-tab" data-bs-toggle="pill"
-                                        data-bs-target="#pills-FoodDrink" type="button" role="tab"
-                                        aria-controls="pills-FoodDrink" aria-selected="false">Food &
-                                        Drink</button>
-                                </li>
+                                @endforeach
+                               
+   
                             </ul>
                         </div>
                     </div>
@@ -196,7 +176,18 @@
                                             <a href="{{ route('website.shop-details' , $item->id) }}"><img src="{{ asset('images/books/' .$item->basic_image_path) }}" alt="img"></a>
                                             <ul class="shop-icon d-grid justify-content-center align-items-center">
                                                 <li>
-                                                    <a href="{{ route('website.shop-details' , $item->id) }}"><i class="far fa-heart"></i></a>
+                                                    <a href="{{ route('wishlist.add' , $item->id) }}" >
+                                                      
+                                                        <i class="far fa-heart wishlist-icon" 
+                                                           onclick="addToWishlist({{ $item->id }})" 
+                                                           id="wishlist-icon-{{ $item->id }}" 
+                                                           style="cursor: pointer;" 
+                                                           data-book-id="{{ $item->id }}"
+                                                           title="Add to Wishlist">
+                                                            <span class="wishlist-badge d-none"></span>
+                                                        </i>
+                                               
+                                                    </a>
                                                 </li>
                                                 <li>
                                                     <a href="{{ route('website.shop-details' , $item->id) }}">
@@ -221,10 +212,49 @@
                                                     {{ $item->rating }} ({{ $item->rating_count }})
                                                 </li>
                                             </ul>
-                                            <div class="shop-button">
-                                                <a href="{{ route('website.shop-details' , $item->id) }}" class="theme-btn"><i
-                                                        class="fa-solid fa-basket-shopping"></i> Add To Cart</a>
+                                          <form action="{{ route('cart.add', $item->id) }}" method="POST" class="enhanced-cart-form" data-book-id="{{ $item->id }}">
+                                            @csrf
+                                            <div class="shop-button quantity-wrapper">
+                                                <label for="quantity-{{ $item->id }}" class="quantity-label">
+                                                    <i class="fa-solid fa-sort-numeric-up"></i> Quantity:
+                                                </label>
+                                                <div class="quantity-controls">
+                                                    <button type="button" class="qty-btn qty-minus" data-action="decrease">
+                                                        <i class="fa-solid fa-minus"></i>
+                                                    </button>
+                                                    <input type="number" 
+                                                           id="quantity-{{ $item->id }}" 
+                                                           name="quantity" 
+                                                           value="1" 
+                                                           min="1" 
+                                                           max="99"
+                                                           class="quantity-input"
+                                                           data-original-value="1">
+                                                    <button type="button" class="qty-btn qty-plus" data-action="increase">
+                                                        <i class="fa-solid fa-plus"></i>
+                                                    </button>
+                                                </div>
+                                                <small class="quantity-hint">Min: 1, Max: 99</small>
                                             </div>
+                                            <div class="shop-button">
+                                                <button type="submit" class="theme-btn add-to-cart-btn" data-loading-text="Adding...">
+                                                    <i class="fa-solid fa-basket-shopping"></i> 
+                                                    <span class="btn-text">Add To Cart</span>
+                                                    <span class="btn-loading d-none">
+                                                        <i class="fa-solid fa-spinner fa-spin"></i> Adding...
+                                                    </span>
+                                                </button>
+                                            </div>
+                                            <div class="form-feedback d-none">
+                                                <div class="alert alert-success d-none">
+                                                    <i class="fa-solid fa-check-circle"></i> Added to cart successfully!
+                                                </div>
+                                                <div class="alert alert-danger d-none">
+                                                    <i class="fa-solid fa-exclamation-circle"></i> <span class="error-message"></span>
+                                                </div>
+                                            </div>
+                                          </form>
+        
                                         </div>
                                     </div>
                             </div>

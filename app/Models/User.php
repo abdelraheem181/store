@@ -68,6 +68,22 @@ class User extends Authenticatable
         return $this->hasMany(Country::class);
     }
 
+    public function wishlists()
+    {
+        return $this->hasMany(Wishlist::class);
+    }
+
+    public function wishlistBooks()
+    {
+        return $this->belongsToMany(Book::class, 'wishlists')
+                    ->withTimestamps();
+    }
+
+    public function isInWishlist($bookId)
+    {
+        return $this->wishlists()->where('book_id', $bookId)->exists();
+    }
+
     
     
     

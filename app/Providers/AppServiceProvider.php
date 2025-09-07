@@ -3,7 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\View;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -20,6 +20,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Schema::defaultStringLength(191);
+        // Share cart count with all views
+        View::composer('*', function ($view) {
+            $cart = session()->get('cart', []);
+            $cartCount = count($cart);
+            $view->with('cartCount', $cartCount);
+            $view->with('cart', $cart); 
+        });
     }
 }

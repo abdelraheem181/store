@@ -34,15 +34,18 @@
 
   <!-- Team Details Section Start -->
   <section class="team-details-section fix section-padding">
+
+    {{-- foreach loop for the author --}}
+ 
       <div class="container">
           <div class="team-details-wrapper">
               <div class="team-details-items">
                   <div class="details-image wow fadeInUp" data-wow-delay=".3s">
-                      <img src="{{ asset('img/team/details.png') }}" alt="img">
+                      <img src="{{ asset('images/authors/' .$author->image_path) }}" alt="img">
                   </div>
                   <div class="details-content wow fadeInUp" data-wow-delay=".5s">
-                      <h3>Author: Wade Warren</h3>
-                      <span>United State of America</span>
+                      <h3>Author: {{ $author->name }}</h3>
+                      <span>{{ $author->country->name }}</span>
                       <div class="social-icon d-flex align-items-center">
                           <a href="https://www.facebook.com/"><i class="fab fa-facebook-f"></i></a>
                           <a href="https://x.com/"><i class="fab fa-twitter"></i></a>
@@ -52,33 +55,32 @@
                   </div>
               </div>
               <p class="wow fadeInUp" data-wow-delay=".7s">
-                  Morbi cursus enim in consequat suscipit. Quisque id dui ante. Praesent auctor sed velit ac aliquet.
-                  Morbi consectetur sem nec ipsum malesuada, ut gravida nisl molestie. Proin hendrerit ullamcorper
-                  dui.
+                  {{ $author->description }}
               </p>
               <div class="details-counter-area">
                   <div class="counter-items wow fadeInUp" data-wow-delay=".3s">
-                      <h2><span class="count">4</span>+</h2>
+                      <h2><span class="count">{{ $books_count }}</span>+</h2>
                       <p>Books</p>
                   </div>
                   <div class="counter-items wow fadeInUp" data-wow-delay=".5s">
-                      <h2><span class="count">100</span>+</h2>
+                      <h2><span class="count">3</span>+</h2>
                       <p>Seles</p>
                   </div>
                   <div class="counter-items wow fadeInUp" data-wow-delay=".7s">
-                      <h2><span class="count">90</span>+</h2>
+                      <h2><span class="count">5</span>+</h2>
                       <p>Review</p>
                   </div>
               </div>
           </div>
       </div>
+  
   </section>
 
   <!-- Shop Section Start -->
   <section class="shop-section section-padding fix pt-0">
       <div class="container">
           <div class="section-title wow fadeInUp" data-wow-delay=".3s">
-              <h2>Books By Wade Warren</h2>
+              <h2>Books By {{ $author->name }}</h2>
           </div>
           <div class="swiper book-slider">
               <div class="swiper-wrapper">

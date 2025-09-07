@@ -28,6 +28,17 @@ Route::get('/', function () {
     return view('website.index');
 })->name('website.index');
 
+// Test notification routes (remove these after testing)
+Route::get('/test-success', function () {
+    return redirect()->route('website.index')->with('success', 'This is a test success message!');
+})->name('test.success');
+
+Route::get('/test-error', function () {
+    return redirect()->route('website.index')->with('error', 'This is a test error message!');
+})->name('test.error');
+
+
+
 // contact route
 Route::get('/contact', [ContactController::class, 'index'])->name('website.contact');
 
@@ -49,14 +60,28 @@ Route::get('/shop-details/{id?}', [ShopDetailsController::class, 'show'])->name(
 //shop cart route
 Route::get('/shop-cart', [ShopCartController::class, 'index'])->name('website.shop-cart');
 
-//wishlist route
-Route::get('/wishlist', [WishListController::class, 'index'])->name('website.wishlist');
+//wishlist routes
+Route::middleware('auth')->group(function () {
+    Route::get('/wishlist', [WishListController::class, 'index'])->name('website.wishlist');
+    Route::get('/wishlist/add/{book_id}', [WishListController::class, 'addToWishlist'])->name('wishlist.add');
+    Route::delete('/wishlist/remove/{book_id}', [WishListController::class, 'removeFromWishlist'])->name('wishlist.remove');
+    Route::delete('/wishlist/clear', [WishListController::class, 'clearWishlist'])->name('wishlist.clear');
+    Route::get('/wishlist/check/{book_id}', [WishListController::class, 'checkWishlistStatus'])->name('wishlist.check');
+    Route::post('/wishlist/toggle/{book_id}', [WishListController::class, 'toggleWishlist'])->name('wishlist.toggle');
+});
 
 //team details route
-Route::get('/team-details', [TeamDetailsController::class, 'index'])->name('website.team-details');
+Route::get('/team-details/{id?}', [TeamDetailsController::class, 'show'])->name('website.team-details');
 
 //team route
 Route::get('/team', [TeamController::class, 'index'])->name('website.team');
+
+//add to cart route
+Route::post('/cart/add/{book_id}', [ShopCartController::class, 'addToCart'])->name('cart.add');
+Route::patch('/cart/update', [ShopCartController::class, 'updateCart'])->name('cart.update');
+Route::delete('/cart/remove', [ShopCartController::class, 'removeFromCart'])->name('cart.remove');
+Route::delete('/cart/remove-session/{book_id}', [ShopCartController::class, 'removeFromSessionCart'])->name('cart.remove-session');
+Route::get('/cart', [ShopCartController::class, 'cart'])->name('cart.index');
 
 
 

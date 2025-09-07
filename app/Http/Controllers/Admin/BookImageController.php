@@ -53,8 +53,10 @@ class BookImageController extends Controller
     //edit
     public function edit($id)
     {
+        // get the book image
         $bookImage = BookImage::find($id);
         $books = Book::all();
+        
         return view('admin.bookImage.edit', compact('bookImage', 'books'));
     }
     

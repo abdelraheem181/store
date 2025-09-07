@@ -46,7 +46,7 @@
                                         <div class="content">
                                             <p>Call Us 7/24</p>
                                             <h3>
-                                                <a href="tel:+2085550112">+208-555-0112</a>
+                                                <a href="tel:+2085550112">+966530708634</a>
                                             </h3>
                                         </div>
                                     </div>
@@ -57,7 +57,7 @@
                                         <div class="content">
                                             <p>Make a Quote</p>
                                             <h3>
-                                                <a href="mailto:example@gmail.com">example@gmail.com</a>
+                                                <a href="mailto:example@gmail.com">abdelraheem181@gmail.com</a>
                                             </h3>
                                         </div>
                                     </div>

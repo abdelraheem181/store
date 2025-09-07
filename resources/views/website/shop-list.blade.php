@@ -70,13 +70,17 @@
                       </div>
                       <div class="row">
                           <div class="col-lg-12 wow fadeInUp" data-wow-delay=".3s">
+
+                            @foreach ($book as $item)
                               <div class="shop-list-items">
                                   <div class="shop-list-thumb">
-                                      <img src="{{ asset('img/shop-list/01.png') }}" alt="img">
+                                      <img src="{{ asset('images/books/' .$item->basic_image_path) }}" alt="img" style="width: 300pxSS; height: 300px;"> 
+                                      {{-- <img src="{{ asset('images/books/' .$item->basic_image_path) }}" alt="img"> --}}
                                   </div>
                                   <div class="shop-list-content">
-                                      <h3><a href="{{ route('website.shop-details') }}">Castle In The Sky</a></h3>
-                                      <h5>$16.00</h5>
+                                      <h3><a href="{{ route('website.shop-details' , $item->id) }}">{{ $item->name }}</a></h3>
+                                      <h5>{{ $item->price }} $</h5> 
+                    
                                       <div class="star">
                                           <i class="fa-solid fa-star"></i>
                                           <i class="fa-solid fa-star"></i>
@@ -85,159 +89,93 @@
                                           <i class="fa-regular fa-star"></i>
                                       </div>
                                       <p>
-                                          Vestibulum consectetur fringilla tellus, et pulvinar massa tempus nec. Fusce
-                                          nibh nibh, consectetur vitae felis quis, sagittis ullamcorper enim. Nullam
-                                          maximus vehicula justo, vel vestibulum turpis dictum at. Nam sed laoreet
-                                          sem. Aliquam urna massa,
+                                         {{ $item->description }}
                                       </p>
-                                      <div class="shop-btn">
-                                          <a href="{{ route('website.shop-details') }}" class="theme-btn"><i
-                                                  class="fa-solid fa-basket-shopping"></i> Add To Cart</a>
+                               
+                                      <form action="{{ route('cart.add', $item->id) }}" method="POST" class="enhanced-cart-form" data-book-id="{{ $item->id }}">
+                                        @csrf
+                                        <div class="shop-button quantity-wrapper">
+                                            <label for="quantity-{{ $item->id }}" class="quantity-label">
+                                                <i class="fa-solid fa-sort-numeric-up"></i> Quantity:
+                                            </label>
+                                            <div class="quantity-controls">
+                                                <button type="button" class="qty-btn qty-minus" data-action="decrease">
+                                                    <i class="fa-solid fa-minus"></i>
+                                                </button>
+                                                <input type="number" 
+                                                       id="quantity-{{ $item->id }}" 
+                                                       name="quantity" 
+                                                       value="1" 
+                                                       min="1" 
+                                                       max="99"
+                                                       class="quantity-input"
+                                                       data-original-value="1">
+                                                <button type="button" class="qty-btn qty-plus" data-action="increase">
+                                                    <i class="fa-solid fa-plus"></i>
+                                                </button>
+                                            </div>
+                                            <small class="quantity-hint">Min: 1, Max: 99</small>
+                                        </div>
+                                        <div class="shop-button">
+                                            <button type="submit" class="theme-btn add-to-cart-btn" data-loading-text="Adding...">
+                                                <i class="fa-solid fa-basket-shopping"></i> 
+                                                <span class="btn-text">Add To Cart</span>
+                                                <span class="btn-loading d-none">
+                                                    <i class="fa-solid fa-spinner fa-spin"></i> Adding...
+                                                </span>
+                                            </button>
+                                        </div>
+                                        <div class="form-feedback d-none">
+                                            <div class="alert alert-success d-none">
+                                                <i class="fa-solid fa-check-circle"></i> Added to cart successfully!
+                                            </div>
+                                            <div class="alert alert-danger d-none">
+                                                <i class="fa-solid fa-exclamation-circle"></i> <span class="error-message"></span>
+                                            </div>
+                                        </div>
+                                      </form>
+                                          
                                           <ul class="shop-icon d-flex justify-content-center align-items-center">
                                               <li>
-                                                  <a href="{{ route('website.shop-cart') }}"><i class="far fa-heart"></i></a>
+                                                @if(auth()->user()->isInWishlist($item->id) )
+                                                  <a href="{{ route('wishlist.add' , $item->id) }}">
+                                                    <i class="far fa-heart"
+                                                        onclick="addToWishlist({{ $item->id }})" 
+                                                        id="wishlist-icon-{{ $item->id }}" 
+                                                        style="cursor: pointer;" 
+                                                        data-book-id="{{ $item->id }}"
+                                                        title="Add to Wishlist">
+                                                            <span class="wishlist-badge d-none"></span>
+                                                    </i>
+                                                </a>
+                                                @else
+                                                <a href="{{ route('wishlist.add' , $item->id) }}">
+                                                    <i class="far fa-heart"
+                                                        onclick="addToWishlist({{ $item->id }})" 
+                                                        id="wishlist-icon-{{ $item->id }}" 
+                                                        style="cursor: pointer;" 
+                                                        data-book-id="{{ $item->id }}"
+                                                        title="Add to Wishlist">
+                                                            <span class="wishlist-badge d-none"></span>
+                                                    </i>
+                                                </a>
+                                                @endif
                                               </li>
                                               <li>
-                                                  <a href="{{ route('website.shop-cart') }}">
+                                                  <a href="{{ route('website.shop-cart' , $item->id) }}">
                                                       <img class="icon" src="{{ asset('img/icon/shuffle.svg') }}"
                                                           alt="svg-icon">
                                                   </a>
                                               </li>
                                               <li>
-                                                  <a href="{{ route('website.shop-details') }}"><i class="far fa-eye"></i></a>
+                                                  <a href="{{ route('website.shop-details' , $item->id) }}"><i class="far fa-eye"></i></a>
                                               </li>
                                           </ul>
                                       </div>
                                   </div>
                               </div>
-                              <div class="shop-list-items">
-                                  <div class="shop-list-thumb">
-                                      <img src="{{ asset('img/shop-list/02.png') }}" alt="img">
-                                      <ul class="post-box">
-                                          <li>
-                                              Hot
-                                          </li>
-                                          <li>
-                                              -30%
-                                          </li>
-                                      </ul>
-                                  </div>
-                                  <div class="shop-list-content">
-                                      <h3><a href="{{ route('website.shop-details') }}">Simple things you to Save to Book</a></h3>
-                                      <h5>$30.00</h5>
-                                      <div class="star">
-                                          <i class="fa-solid fa-star"></i>
-                                          <i class="fa-solid fa-star"></i>
-                                          <i class="fa-solid fa-star"></i>
-                                          <i class="fa-solid fa-star"></i>
-                                          <i class="fa-regular fa-star"></i>
-                                      </div>
-                                      <p>
-                                          Vestibulum consectetur fringilla tellus, et pulvinar massa tempus nec. Fusce
-                                          nibh nibh, consectetur vitae felis quis, sagittis ullamcorper enim. Nullam
-                                          maximus vehicula justo, vel vestibulum turpis dictum at. Nam sed laoreet
-                                          sem. Aliquam urna massa,
-                                      </p>
-                                      <div class="shop-btn">
-                                          <a href="{{ route('website.shop-details') }}" class="theme-btn"><i
-                                                  class="fa-solid fa-basket-shopping"></i> Add To Cart</a>
-                                          <ul class="shop-icon d-flex justify-content-center align-items-center">
-                                              <li>
-                                                  <a href="{{ route('website.shop-cart') }}"><i class="far fa-heart"></i></a>
-                                              </li>
-                                              <li>
-                                                  <a href="{{ route('website.shop-cart') }}">
-                                                      <img class="icon" src="{{ asset('img/icon/shuffle.svg') }}"
-                                                          alt="svg-icon">
-                                                  </a>
-                                              </li>
-                                              <li>
-                                                  <a href="{{ route('website.shop-details') }}"><i class="far fa-eye"></i></a>
-                                              </li>
-                                          </ul>
-                                      </div>
-                                  </div>
-                              </div>
-                              <div class="shop-list-items">
-                                  <div class="shop-list-thumb">
-                                      <img src="{{ asset('img/shop-list/03.png') }}" alt="img">
-                                  </div>
-                                  <div class="shop-list-content">
-                                      <h3><a href="{{ route('website.shop-details') }}">Flovely And Unicom Erna</a></h3>
-                                      <h5>$19.00</h5>
-                                      <div class="star">
-                                          <i class="fa-solid fa-star"></i>
-                                          <i class="fa-solid fa-star"></i>
-                                          <i class="fa-solid fa-star"></i>
-                                          <i class="fa-solid fa-star"></i>
-                                          <i class="fa-regular fa-star"></i>
-                                      </div>
-                                      <p>
-                                          Vestibulum consectetur fringilla tellus, et pulvinar massa tempus nec. Fusce
-                                          nibh nibh, consectetur vitae felis quis, sagittis ullamcorper enim. Nullam
-                                          maximus vehicula justo, vel vestibulum turpis dictum at. Nam sed laoreet
-                                          sem. Aliquam urna massa,
-                                      </p>
-                                      <div class="shop-btn">
-                                          <a href="{{ route('website.shop-details') }}" class="theme-btn"><i
-                                                  class="fa-solid fa-basket-shopping"></i> Add To Cart</a>
-                                          <ul class="shop-icon d-flex justify-content-center align-items-center">
-                                              <li>
-                                                  <a href="{{ route('website.shop-cart') }}"><i class="far fa-heart"></i></a>
-                                              </li>
-                                              <li>
-                                                  <a href="{{ route('website.shop-cart') }}">
-                                                      <img class="icon" src="{{ asset('img/icon/shuffle.svg') }}"
-                                                          alt="svg-icon">
-                                                  </a>
-                                              </li>
-                                              <li>
-                                                      <a href="{{ route('website.shop-details') }}"><i class="far fa-eye"></i></a>
-                                              </li>
-                                          </ul>
-                                      </div>
-                                  </div>
-                              </div>
-                              <div class="shop-list-items">
-                                  <div class="shop-list-thumb">
-                                      <img src="{{ asset('img/shop-list/04.png') }}" alt="img">
-                                  </div>
-                                  <div class="shop-list-content">
-                                      <h3><a href="{{ route('website.shop-details') }}">Qple Gpod with Retina Sisplay</a></h3>
-                                      <h5>$39.00</h5>
-                                      <div class="star">
-                                          <i class="fa-solid fa-star"></i>
-                                          <i class="fa-solid fa-star"></i>
-                                          <i class="fa-solid fa-star"></i>
-                                          <i class="fa-solid fa-star"></i>
-                                          <i class="fa-regular fa-star"></i>
-                                      </div>
-                                      <p>
-                                          Vestibulum consectetur fringilla tellus, et pulvinar massa tempus nec. Fusce
-                                          nibh nibh, consectetur vitae felis quis, sagittis ullamcorper enim. Nullam
-                                          maximus vehicula justo, vel vestibulum turpis dictum at. Nam sed laoreet
-                                          sem. Aliquam urna massa,
-                                      </p>
-                                      <div class="shop-btn">
-                                          <a href="{{ route('website.shop-details') }}" class="theme-btn"><i
-                                                  class="fa-solid fa-basket-shopping"></i> Add To Cart</a>
-                                          <ul class="shop-icon d-flex justify-content-center align-items-center">
-                                              <li>
-                                                  <a href="{{ route('website.shop-cart') }}"><i class="far fa-heart"></i></a>
-                                              </li>
-                                              <li>
-                                                  <a href="{{ route('website.shop-cart') }}">
-                                                            <img class="icon" src="{{ asset('img/icon/shuffle.svg') }}"
-                                                          alt="svg-icon">
-                                                  </a>
-                                              </li>
-                                              <li>
-                                                  <a href="{{ route('website.shop-details') }}"><i class="far fa-eye"></i></a>
-                                              </li>
-                                          </ul>
-                                      </div>
-                                  </div>
-                              </div>
+                            @endforeach
+                 
                           </div>
                       </div>
                       <div class="page-nav-wrap text-center">

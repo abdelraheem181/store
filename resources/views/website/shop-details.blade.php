@@ -64,8 +64,14 @@
                   <div class="col-lg-7">
                       <div class="shop-details-content">
                           <div class="title-wrapper">
-                              <h2>{{ $book->getTranslation('name', 'en') }}</h2>
-                              <h5>Stock availability.</h5>
+                              <h2>{{ $book->name}}</h2>
+                              <h5>
+                                @if($book->avl_qty > 0)
+                                    Stock availability
+                                @else
+                                    Stock not available
+                                @endif
+                              </h5>
                           </div>
                           <div class="star">
                                     <a href="{{ route('website.shop-details') }}"> <i class="fas fa-star"></i></a>
@@ -104,15 +110,8 @@
                                                   <div class="content">
                                                       <h3 id="readMoreModalLabel">The Role Of Book</h3>
                                                       <p>
-                                                          Educating the Public <br>
-                                                          Political books play a crucial role in educating the public about political theories, historical events, policies, and the workings of governments. They provide readers with insights into complex political concepts and the historical context behind current events, helping to foster a more informed citizenry. <br><br>
-
-                                                          Shaping Public Opinion <br>
-                                                          Authors of political books often aim to influence public opinion by presenting arguments and perspectives on various issues. These books can sway readers' views, either reinforcing their existing beliefs or challenging them to consider alternative viewpoints. This influence can extend to political debates and discussions in the public sphere. <br><br>
-
-                                                          Documenting History <br>
-                                                          Political books serve as valuable records of historical events and political movements. They document the thoughts, actions, and decisions of political leaders and activists, providing future generations with a detailed account of significant periods and events. This historical documentation is essential for understanding the evolution of political systems and ideologies.
-
+   
+                                                        {{ $book->description }}
                                                       </p>
                                                   </div>
                                               </div>
@@ -120,8 +119,48 @@
                                       </div>
                                   </div>
                               </div>
-                              <a href="{{ route('website.shop-details') }}" class="theme-btn"><i
-                                      class="fa-solid fa-basket-shopping"></i> Add To Cart</a>
+                              <form action="{{ route('cart.add', $book->id) }}" method="POST" class="enhanced-cart-form" data-book-id="{{ $book->id }}">
+                                @csrf
+                                <div class="shop-button quantity-wrapper">
+                                    <label for="quantity-{{ $book->id }}" class="quantity-label">
+                                        <i class="fa-solid fa-sort-numeric-up"></i> Quantity:
+                                    </label>
+                                    <div class="quantity-controls">
+                                        <button type="button" class="qty-btn qty-minus" data-action="decrease">
+                                            <i class="fa-solid fa-minus"></i>
+                                        </button>
+                                        <input type="number" 
+                                                id="quantity-{{ $book->id }}" 
+                                               name="quantity" 
+                                               value="1" 
+                                               min="1" 
+                                               max="99"
+                                               class="quantity-input"
+                                               data-original-value="1">
+                                        <button type="button" class="qty-btn qty-plus" data-action="increase">
+                                            <i class="fa-solid fa-plus"></i>
+                                        </button>
+                                    </div>
+                                    <small class="quantity-hint">Min: 1, Max: 99</small>
+                                </div>
+                                <div class="shop-button">
+                                    <button type="submit" class="theme-btn add-to-cart-btn" data-loading-text="Adding...">
+                                        <i class="fa-solid fa-basket-shopping"></i> 
+                                        <span class="btn-text">Add To Cart</span>
+                                        <span class="btn-loading d-none">
+                                            <i class="fa-solid fa-spinner fa-spin"></i> Adding...
+                                        </span>
+                                    </button>
+                                </div>
+                                <div class="form-feedback d-none">
+                                    <div class="alert alert-success d-none">
+                                        <i class="fa-solid fa-check-circle"></i> Added to cart successfully!
+                                    </div>
+                                    <div class="alert alert-danger d-none">
+                                        <i class="fa-solid fa-exclamation-circle"></i> <span class="error-message"></span>
+                                    </div>
+                                </div>
+                              </form>
                               <div class="icon-box">
                                   <a href="{{ route('website.shop-details') }}" class="icon">
                                       <i class="far fa-heart"></i>
@@ -236,7 +275,13 @@
                                   <tbody>
                                       <tr>
                                           <td class="text-1">Availability</td>
-                                          <td class="text-2">Available</td>
+                                          <td class="text-2">
+                                            @if($book->avl_qty > 0)
+                                                Available
+                                            @else
+                                                Not Available
+                                            @endif
+                                          </td>
                                       </tr>
                                       <tr>
                                           <td class="text-1">Categories</td>

@@ -282,6 +282,26 @@
                                 </div>
                             </div>
                         </div>
+                        <!-- Avl Quantity Section -->
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <h6 class="text-primary fw-semibold mb-3">
+                                    <i class="fas fa-quantity me-2"></i>Avl Quantity
+                                </h6>
+                        </div>
+                            <div class="col-md-4 mb-3">
+                                <div class="form-group">
+                                    <label for="avl_qty" class="form-label fw-semibold">
+                                        <i class="fas fa-quantity me-1 text-muted"></i>Avl Quantity
+                                    </label>
+                                    <input type="number" name="avl_qty" class="form-control @error('avl_qty') is-invalid @enderror" 
+                                           required id="avl_qty" placeholder="e.g., 10">
+                                    @error('avl_qty')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>
 
                         <!-- Additional Information Section -->
                         <div class="row mb-4">
@@ -375,7 +395,8 @@
                                 </div>
                             </div>
                         </div>
-
+               
+                        
                         <!-- Submit Section -->
                         <div class="row">
                             <div class="col-12">

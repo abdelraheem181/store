@@ -46,23 +46,33 @@
           </div>
           <div class="swiper team-slider">
               <div class="swiper-wrapper">
+
+                {{-- foreach loop for the author --}}
+                  @foreach($author as $author)
+
                   <div class="swiper-slide">
                       <div class="team-box-items">
                           <div class="team-image">
                               <div class="thumb">
-                                  <img src="{{ asset('img/team/01.jpg') }}" alt="img">
+                                  <img " src="{{ asset('images/authors/' .$author->image_path) }}" alt="img">
                               </div>
-                              <div class="shape-img">
+                              {{-- <div class="shape-img">
                                   <img src="{{ asset('img/team/shape-img.png') }}" alt="img">
-                              </div>
+                              </div> --}}
                           </div>
                           <div class="team-content text-center">
-                              <h6><a href="{{ route('website.team-details') }}">Esther Howard</a></h6>
-                              <p>10 Published Books</p>
+                              <h6><a href="{{ route('website.team-details', $author->id) }}">{{ $author->name}}</a></h6>
+                              <p>{{ $author->books_count }} Published Books</p>
+                              <p>{{ $author->email }}</p>
+                              <p>{{ $author->phone }}</p>
+                              <p>{{ $author->country->name }}</p>
+                             
                           </div>
                       </div>
                   </div>
-                  <div class="swiper-slide">
+                  @endforeach
+
+                  {{-- <div class="swiper-slide">
                       <div class="team-box-items">
                           <div class="team-image">
                               <div class="thumb">
@@ -141,14 +151,14 @@
                               <p>12 Published Books</p>
                           </div>
                       </div>
-                  </div>
+                  </div> --}}
               </div>
           </div>
       </div>
   </section>
 
   <!-- Shop Section start  -->
-  <section class="shop-section section-padding fix pt-0">
+  {{-- <section class="shop-section section-padding fix pt-0">
       <div class="container">
           <div class="section-title-area">
               <div class="section-title wow fadeInUp" data-wow-delay=".3s">
@@ -435,5 +445,5 @@
               </div>
           </div>
       </div>
-  </section>
+  </section> --}}
 @endsection

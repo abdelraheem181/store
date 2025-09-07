@@ -29,6 +29,7 @@ return new class extends Migration
             $table->string('weight')->nullable();
             $table->string('tags')->nullable();
             $table->string('publish_year')->nullable();
+            $table->integer('avl_qty')->nullable();
             $table->timestamps();
     
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');

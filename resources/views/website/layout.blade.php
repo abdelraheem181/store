@@ -8,6 +8,7 @@
       <meta name="viewport" content="width=device-width, initial-scale=1">
       <meta name="author" content="gramentheme">
       <meta name="description" content="Bookle - Book Store WooCommerce Html Template ">
+      <meta name="csrf-token" content="{{ csrf_token() }}">
       <!-- ======== Page title ============ -->
       <title>Bookle - Book Store WooCommerce Html Template</title>
       <!--<< Favcion >>-->
@@ -169,11 +170,11 @@
                 <ul class="contact-list">
                     <li>
                         <i class="fa-regular fa-phone"></i>
-                        <a href="tel:+20866660112">+208-6666-0112</a>
+                        <a href="tel:+20866660112">+966530708634</a>
                     </li>
                     <li>
                         <i class="far fa-envelope"></i>
-                        <a href="mailto:info@example.com">info@example.com</a>
+                        <a href="mailto:info@example.com">abdelraheem181@gmail.com</a>
                     </li>
                     <li>
                         <i class="far fa-clock"></i>
@@ -182,10 +183,30 @@
                 </ul>
                 <ul class="list">
                     <li><i class="fa-light fa-comments"></i><a href="contact.html">Live Chat</a></li>
-                    <li><i class="fa-light fa-user"></i>
+                    <li>
+
+
+
+                        <!-- Login and Logout -->
+                        @guest 
+                        <i class="fa-light fa-user"></i>
                         <button data-bs-toggle="modal" data-bs-target="#loginModal">
                             Login
                         </button>
+                        @endguest
+
+                        <!-- Login and Logout -->
+                        @auth
+                       <form action="{{ route('logout') }}" method="POST">
+                        @csrf
+                        <i class="fa-light fa-user"></i>
+                        <button type="submit">
+                            Logout
+                        </button>
+                       </form>
+                        @endauth
+
+
                     </li>
                 </ul>
             </div>
@@ -238,20 +259,15 @@
                                                           <li><a href="{{ route('website.checkout') }}">Checkout</a></li>
                                                       </ul>
                                                   </li>
-                                                  <li class="has-dropdown">
-                                                      <a href="{{ route('website.about') }}">
-                                                        Authors
-                                                          <i class="fas fa-angle-down"></i>
-                                                      </a>
-                                                       <ul class="submenu">
+                                                
  
-                                                                  <li><a href="{{ route('website.team') }}">Author</a></li>
-                                                                  <li><a href="{{ route('website.team-details') }}">Author Profile</a></li>
-                                                        
-                                                          </li>
-                                                    
-                                                      </ul>
-                                                  </li>
+                                                    <li>
+                                                        <a href="{{ route('website.team') }}">Author
+                                                            
+                                                        </a>
+                                                    </li>
+                                                                 
+                                            
                                                <!--   <li>
                                                       <a href="news.html">
                                                           Blog
@@ -312,11 +328,14 @@
                                       </form>
                                   </div>
                                   <div class="menu-cart">
-                                      <a href="wishlist.html" class="cart-icon">
+                                      <a href="{{ route('website.wishlist') }}" class="cart-icon">
                                           <i class="fa-regular fa-heart"></i>
                                       </a>
-                                      <a href="shop-cart.html" class="cart-icon">
+                                      <a id="cart-icon" href="{{ route('website.shop-cart') }}" class="cart-icon">
                                           <i class="fa-regular fa-cart-shopping"></i>
+                                          @if($cartCount > 0)
+                                              <span class="cart-badge">{{ $cartCount }}</span>
+                                          @endif
                                       </a>
                                       <div class="header-humbager ml-30">
                                           <a class="sidebar__toggle" href="javascript:void(0)">
@@ -356,54 +375,17 @@
                                   <div class="category-item">
                                       <nav>
                                           <ul>
+
+                                            {{-- get all categories --}}
+                                            @foreach(App\Models\Category::all() as $category)
                                               <li>
-                                                  <a href="shop-details.html">
-                                                      <span>Novel Books</span>
-                                                      <span>(8)</span>
+                                                  <a href="{{ route('website.shop-details', $category->id) }}">
+                                                      <span>{{ $category->name }}</span>
+                                                      <span>({{ App\Models\Book::where('category_id', $category->id)->count() }})</span>
                                                   </a>
                                               </li>
-                                              <li>
-                                                  <a href="shop-details.html">
-                                                      <span>Poetry Books</span>
-                                                      <span>(5)</span>
-                                                  </a>
-                                              </li>
-                                              <li>
-                                                  <a href="shop-details.html">
-                                                      <span>History Books</span>
-                                                      <span>(7)</span>
-                                                  </a>
-                                              </li>
-                                              <li>
-                                                  <a href="shop-details.html">
-                                                      <span>Movement Books</span>
-                                                      <span>(3)</span>
-                                                  </a>
-                                              </li>
-                                              <li>
-                                                  <a href="shop-details.html">
-                                                      <span>Independence Books </span>
-                                                      <span>(4)</span>
-                                                  </a>
-                                              </li>
-                                              <li>
-                                                  <a href="shop-details.html">
-                                                      <span>Technology Books</span>
-                                                      <span>(2)</span>
-                                                  </a>
-                                              </li>
-                                              <li>
-                                                  <a href="shop-details.html">
-                                                      <span>Political Books</span>
-                                                      <span>(1)</span>
-                                                  </a>
-                                              </li>
-                                              <li>
-                                                  <a href="shop-details.html">
-                                                      <span>Romantic Books</span>
-                                                      <span>(7)</span>
-                                                  </a>
-                                              </li>
+                                            @endforeach 
+
                                           </ul>
                                       </nav>
                                   </div>
@@ -425,16 +407,19 @@
                           <div class="content">
                               <span>Call Us Now</span>
                               <h5>
-                                  <a href="tel:+2085550112">+208-555-0112</a>
+                                  <a href="tel:+2085550112">+966530708634</a>
                               </h5>
                           </div>
                       </div>
                       <div class="menu-cart">
-                          <a href="wishlist.html" class="cart-icon">
+                          <a href="{{ route('website.wishlist') }}" class="cart-icon">
                               <i class="fa-regular fa-heart"></i>
                           </a>
-                          <a href="shop-cart.html" class="cart-icon">
+                          <a href="{{ route('website.shop-cart') }}" class="cart-icon">
                               <i class="fa-regular fa-cart-shopping"></i>
+                              @if($cartCount > 0)
+                                  <span class="cart-badge">{{ $cartCount }}</span>
+                              @endif
                           </a>
                           <div class="header-humbager ml-30">
                               <a class="sidebar__toggle" href="javascript:void(0)">
@@ -443,8 +428,12 @@
                                   </div>
                               </a>
                           </div>
-                          <button type="button" class="theme-btn rounded-1" data-bs-toggle="modal"
-                              data-bs-target="#registrationModal">Sign Up</button>
+                          @guest
+                             <button type="button" class="theme-btn rounded-1" data-bs-toggle="modal"
+                              data-bs-target="#registrationModal">
+                              Sign Up
+                            </button>
+                          @endguest
                       </div>
                   </div>
               </div>
@@ -462,6 +451,8 @@
                       <div class="identityBox">
                           <div class="form-wrapper">
                               <h1 id="loginModalLabel">welcome back!</h1>
+                              <form action="{{ route('login') }}" method="POST">
+                                @csrf
                               <input class="inputField" type="email" name="email" placeholder="Email Address">
                               <input class="inputField" type="password" name="password" placeholder="Enter Password">
                               <div class="input-check remember-me">
@@ -470,11 +461,15 @@
                                           id="saveForNext">
                                       <label for="saveForNext">Remember me</label>
                                   </div>
-                                  <div class="text"> <a href="index-2.html">Forgot Your password?</a> </div>
+                                  <div class="text"> <a href="{{ route('password.request') }}">Forgot Your password?</a> </div>
                               </div>
+                           
                               <div class="loginBtn">
-                                  <a href="index-2.html" class="theme-btn rounded-0"> Log in </a>
+                                  <button type="submit" class="theme-btn rounded-0"> Log in </button>
                               </div>
+
+                              </form>
+
                               <div class="orting-badge">
                                   Or
                               </div>
@@ -527,22 +522,90 @@
                       <div class="identityBox">
                           <div class="form-wrapper">
                               <h1 id="registrationModalLabel">Create account!</h1>
-                              <input class="inputField" type="text" name="name" id="name" placeholder="User Name">
-                              <input class="inputField" type="email" name="email" placeholder="Email Address">
-                              <input class="inputField" type="password" name="password" placeholder="Enter Password">
-                              <input class="inputField" type="password" name="password"
-                                  placeholder="Enter Confirm Password">
-                              <div class="input-check remember-me">
+                              <form action="{{ route('register') }}" method="POST" id="registerForm" class="enhanced-register-form">
+                                @csrf
+                                
+                                <!-- Name Field -->
+                                <div class="form-group">
+                                    <div class="input-wrapper">
+                                        <i class="fas fa-user input-icon"></i>
+                                        <input type="text" name="name" id="name" class="form-input" placeholder="Full Name" required>
+                                        <div class="input-focus-line"></div>
+                                    </div>
+                                    <div class="error-message" id="name-error"></div>
+                                </div>
+
+                                <!-- Email Field -->
+                                <div class="form-group">
+                                    <div class="input-wrapper">
+                                        <i class="fas fa-envelope input-icon"></i>
+                                        <input type="email" name="email" id="email" class="form-input" placeholder="Email Address" required>
+                                        <div class="input-focus-line"></div>
+                                    </div>
+                                    <div class="error-message" id="email-error"></div>
+                                </div>
+
+                                <!-- Password Field -->
+                                <div class="form-group">
+                                    <div class="input-wrapper">
+                                        <i class="fas fa-lock input-icon"></i>
+                                        <input type="password" name="password" id="password" class="form-input" placeholder="Enter Password" required minlength="8">
+                                        <button type="button" class="password-toggle" id="password-toggle">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                        <div class="input-focus-line"></div>
+                                    </div>
+                                    <div class="password-strength" id="password-strength">
+                                        <div class="strength-bar">
+                                            <div class="strength-fill"></div>
+                                        </div>
+                                        <span class="strength-text">Password strength</span>
+                                    </div>
+                                    <div class="error-message" id="password-error"></div>
+                                </div>
+
+                                <!-- Confirm Password Field -->
+                                <div class="form-group">
+                                    <div class="input-wrapper">
+                                        <i class="fas fa-lock input-icon"></i>
+                                        <input type="password" name="password_confirmation" id="password_confirmation" class="form-input" placeholder="Confirm Password" required>
+                                        <button type="button" class="password-toggle" id="confirm-password-toggle">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                        <div class="input-focus-line"></div>
+                                    </div>
+                                    <div class="error-message" id="password_confirmation-error"></div>
+                                </div>
+
+                                <!-- Terms and Conditions -->
+                                <div class="form-group terms-group">
                                   <div class="checkbox-wrapper">
-                                      <input type="checkbox" class="form-check-input" name="save-for-next"
-                                          id="rememberMe">
-                                      <label for="rememberMe">Remember me</label>
+                                      <input type="checkbox" class="form-check-input" name="terms" id="terms" required>
+                                        <label for="terms" class="terms-label">
+                                            <span class="checkmark"></span>
+                                            I agree to the <a href="#" target="_blank" class="terms-link">Terms and Conditions</a>
+                                        </label>
                                   </div>
-                                  <div class="text"> <a href="index-2.html">Forgot Your password?</a> </div>
+                                    <div class="error-message" id="terms-error"></div>
                               </div>
-                              <div class="loginBtn">
-                                  <a href="index-2.html" class="theme-btn rounded-0"> Log in </a>
+
+                                <!-- Submit Button -->
+                                <div class="form-group">
+                                    <button type="submit" class="theme-btn enhanced-submit-btn" id="submitBtn">
+                                        <span class="btn-text">Create Account</span>
+                                        <span class="btn-loading">
+                                            <i class="fas fa-spinner fa-spin"></i>
+                                            Creating Account...
+                                        </span>
+                                    </button>
                               </div>
+
+                                <!-- Login Link -->
+                                <div class="form-footer">
+                                    <p>Already have an account? <a href="{{ route('login') }}" class="login-link">Sign In</a></p>
+                              </div>
+                              </form>
+
                               <div class="orting-badge">
                                   Or
                               </div>
@@ -598,7 +661,7 @@
                   <div class="content">
                       <p>Call Us 7/24</p>
                       <h3>
-                          <a href="tel:+2085550112">+208-555-0112</a>
+                          <a href="tel:+2085550112">+966530708634</a>
                       </h3>
                   </div>
               </div>
@@ -609,7 +672,7 @@
                   <div class="content">
                       <p>Make a Quote</p>
                       <h3>
-                          <a href="mailto:example@gmail.com">example@gmail.com</a>
+                          <a href="mailto:example@gmail.com">abdelrahman181@gmail.com</a>
                       </h3>
                   </div>
               </div>
@@ -805,8 +868,240 @@
   <!-- Gsap -->
   <script src="{{ asset('js/gsap.min.js') }}"></script>
   <!--<< Main.js >>-->
+  <script>
+    // Set authentication status for JavaScript
+    window.isAuthenticated = {{ auth()->check() ? 'true' : 'false' }};
+    window.currentUserId = {{ auth()->check() ? auth()->id() : 'null' }};
+  </script>
+
   <script src="{{ asset('js/main.js') }}"></script>
 
+ 
+
+  @stack('scripts')
+
+
+  <!-- Enhanced Registration Form JavaScript -->
+  <script>
+  // Show session notifications with fallback
+  function showSessionNotifications() {
+      @if(session('success'))
+          if (typeof showNotification === 'function') {
+              showNotification("{{ session('success') }}", 'success');
+          } else {
+              // Fallback notification if showNotification is not available
+              setTimeout(function() {
+                  if (typeof showNotification === 'function') {
+                      showNotification("{{ session('success') }}", 'success');
+                  }
+              }, 100);
+          }
+      @endif
+      @if(session('error'))
+          if (typeof showNotification === 'function') {
+              showNotification("{{ session('error') }}", 'error');
+          } else {
+              // Fallback notification if showNotification is not available
+              setTimeout(function() {
+                  if (typeof showNotification === 'function') {
+                      showNotification("{{ session('error') }}", 'error');
+                  }
+              }, 100);
+          }
+      @endif
+  }
+
+  // Try to show notifications immediately, then again after DOM is ready
+  showSessionNotifications();
+  
+  document.addEventListener('DOMContentLoaded', function() {
+      showSessionNotifications();
+  
+      
+      // Form validation rules
+      const validationRules = {
+          name: {
+              required: true,
+              minLength: 2,
+              pattern: /^[a-zA-Z\s]+$/,
+              message: 'Please enter a valid name (letters and spaces only)'
+          },
+          email: {
+              required: true,
+              pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+              message: 'Please enter a valid email address'
+          },
+          password: {
+              required: true,
+              minLength: 8,
+              pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]/,
+              message: 'Password must be at least 8 characters with uppercase, lowercase, number, and special character'
+          },
+          password_confirmation: {
+              required: true,
+              match: 'password',
+              message: 'Passwords do not match'
+          },
+          terms: {
+              required: true,
+              message: 'You must agree to the terms and conditions'
+          }
+      };
+
+      // Password strength checker
+      function checkPasswordStrength(password) {
+          const strengthIndicator = document.getElementById('password-strength');
+          const strengthFill = strengthIndicator.querySelector('.strength-fill');
+          const strengthText = strengthIndicator.querySelector('.strength-text');
+          
+          let score = 0;
+          let feedback = '';
+          
+          if (password.length >= 8) score++;
+          if (/[a-z]/.test(password)) score++;
+          if (/[A-Z]/.test(password)) score++;
+          if (/\d/.test(password)) score++;
+          if (/[@$!%*?&]/.test(password)) score++;
+          
+          strengthIndicator.classList.add('show');
+          
+          if (score < 2) {
+              strengthFill.className = 'strength-fill weak';
+              feedback = 'Weak';
+          } else if (score < 3) {
+              strengthFill.className = 'strength-fill fair';
+              feedback = 'Fair';
+          } else if (score < 5) {
+              strengthFill.className = 'strength-fill good';
+              feedback = 'Good';
+          } else {
+              strengthFill.className = 'strength-fill strong';
+              feedback = 'Strong';
+          }
+          
+          strengthText.textContent = `Password strength: ${feedback}`;
+      }
+
+      // Password toggle functionality
+      function setupPasswordToggle(toggleId, inputId) {
+          const toggle = document.getElementById(toggleId);
+          const input = document.getElementById(inputId);
+          
+          if (toggle && input) {
+              toggle.addEventListener('click', function() {
+                  const type = input.getAttribute('type') === 'password' ? 'text' : 'password';
+                  input.setAttribute('type', type);
+                  
+                  const icon = toggle.querySelector('i');
+                  icon.classList.toggle('fa-eye');
+                  icon.classList.toggle('fa-eye-slash');
+              });
+          }
+      }
+
+      // Field validation
+      function validateField(fieldName, value) {
+          const rule = validationRules[fieldName];
+          if (!rule) return true;
+          
+          if (rule.required && (!value || value.trim() === '')) {
+              return 'This field is required';
+          }
+          
+          if (value && rule.minLength && value.length < rule.minLength) {
+              return `Must be at least ${rule.minLength} characters`;
+          }
+          
+          if (value && rule.pattern && !rule.pattern.test(value)) {
+              return rule.message;
+          }
+          
+          if (rule.match && value !== document.getElementById(rule.match).value) {
+              return rule.message;
+          }
+          
+          return null;
+      }
+
+      // Show/hide error message
+      function showError(fieldName, message) {
+          const errorElement = document.getElementById(`${fieldName}-error`);
+          const inputWrapper = document.querySelector(`#${fieldName}`).closest('.input-wrapper');
+          
+          if (errorElement) {
+              errorElement.textContent = message;
+              errorElement.classList.add('show');
+          }
+          
+          if (inputWrapper) {
+              inputWrapper.classList.add('error');
+              inputWrapper.classList.remove('success');
+          }
+      }
+
+      function hideError(fieldName) {
+          const errorElement = document.getElementById(`${fieldName}-error`);
+          const inputWrapper = document.querySelector(`#${fieldName}`).closest('.input-wrapper');
+          
+          if (errorElement) {
+              errorElement.classList.remove('show');
+          }
+          
+          if (inputWrapper) {
+              inputWrapper.classList.remove('error');
+              inputWrapper.classList.add('success');
+          }
+      }
+
+      // Real-time validation
+      function setupFieldValidation(fieldName) {
+          const field = document.getElementById(fieldName);
+          if (!field) return;
+          
+          field.addEventListener('blur', function() {
+              const value = this.value.trim();
+              const error = validateField(fieldName, value);
+              
+              if (error) {
+                  showError(fieldName, error);
+              } else {
+                  hideError(fieldName);
+              }
+          });
+          
+          field.addEventListener('input', function() {
+              // Clear error on input
+              hideError(fieldName);
+              
+              // Special handling for password strength
+              if (fieldName === 'password') {
+                  checkPasswordStrength(this.value);
+              }
+          });
+      }
+
+    
+
+      // Initialize all functionality
+      setupPasswordToggle('password-toggle', 'password');
+      setupPasswordToggle('confirm-password-toggle', 'password_confirmation');
+      
+      Object.keys(validationRules).forEach(fieldName => {
+          setupFieldValidation(fieldName);
+      });
+
+      // Add smooth focus transitions
+      document.querySelectorAll('.form-input').forEach(input => {
+          input.addEventListener('focus', function() {
+              this.closest('.input-wrapper').classList.add('focused');
+          });
+          
+          input.addEventListener('blur', function() {
+              this.closest('.input-wrapper').classList.remove('focused');
+          });
+      });
+  });
+  </script>
     
 </body>
-</html>
+</html

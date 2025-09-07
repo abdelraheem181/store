@@ -499,6 +499,231 @@ Description: Bookle - Book Store WooCommerce Html Template
             });
         }
 
+        // 16. Enhanced Cart Form Functionality
+        if ($('.enhanced-cart-form').length > 0) {
+            // Quantity controls
+            $('.enhanced-cart-form').on('click', '.qty-btn', function(e) {
+                e.preventDefault();
+                const form = $(this).closest('.enhanced-cart-form');
+                const input = form.find('.quantity-input');
+                const action = $(this).data('action');
+                let currentValue = parseInt(input.val()) || 1;
+                
+                if (action === 'increase') {
+                    currentValue = Math.min(currentValue + 1, 99);
+                } else if (action === 'decrease') {
+                    currentValue = Math.max(currentValue - 1, 1);
+                }
+                
+                input.val(currentValue);
+                input.attr('data-original-value', currentValue);
+            });
+
+            // Form submission with enhanced UX
+            $('.enhanced-cart-form').on('submit', function(e) {
+                e.preventDefault();
+                const form = $(this);
+                const submitBtn = form.find('.add-to-cart-btn');
+                const feedback = form.find('.form-feedback');
+                const successAlert = feedback.find('.alert-success');
+                const errorAlert = feedback.find('.alert-danger');
+                const bookId = form.data('book-id');
+                
+                // Hide any existing feedback
+                feedback.addClass('d-none');
+                successAlert.addClass('d-none');
+                errorAlert.addClass('d-none');
+                
+                // Show loading state
+                submitBtn.addClass('loading');
+                
+                // Get form data
+                const formData = new FormData(this);
+                
+                // Submit via AJAX
+                $.ajax({
+                    url: form.attr('action'),
+                    method: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function(response) {
+                        // Hide loading state
+                        submitBtn.removeClass('loading');
+                        
+                        // Show success message
+                        successAlert.removeClass('d-none').addClass('show');
+                        feedback.removeClass('d-none');
+                        
+                        // Reset form to original state
+                        const input = form.find('.quantity-input');
+                        const originalValue = input.attr('data-original-value') || '1';
+                        input.val(originalValue);
+
+                        // Update cart count badge
+                        updateCartBadge(response.cartCount);
+                        
+                        // Hide success message after 3 seconds
+                        setTimeout(function() {
+                            feedback.addClass('d-none');
+                        }, 3000);
+                    },
+                    error: function(xhr) {
+                        // Hide loading state
+                        submitBtn.removeClass('loading');
+                        
+                        // Show error message
+                        let errorMessage = 'An error occurred while adding to cart.';
+                        if (xhr.responseJSON && xhr.responseJSON.message) {
+                            errorMessage = xhr.responseJSON.message;
+                        }
+                        
+                        errorAlert.find('.error-message').text(errorMessage);
+                        errorAlert.removeClass('d-none').addClass('show');
+                        feedback.removeClass('d-none');
+                        
+                        // Hide error message after 5 seconds
+                        setTimeout(function() {
+                            feedback.addClass('d-none');
+                        }, 5000);
+                    }
+                });
+            });
+
+            // Input validation
+            $('.enhanced-cart-form .quantity-input').on('input', function() {
+                let value = parseInt($(this).val()) || 1;
+                const min = parseInt($(this).attr('min')) || 1;
+                const max = parseInt($(this).attr('max')) || 99;
+                
+                // Ensure value is within bounds
+                if (value < min) value = min;
+                if (value > max) value = max;
+                
+                $(this).val(value);
+                $(this).attr('data-original-value', value);
+            });
+
+            // Prevent non-numeric input
+            $('.enhanced-cart-form .quantity-input').on('keypress', function(e) {
+                if (e.which < 48 || e.which > 57) {
+                    e.preventDefault();
+                }
+            });
+        }
+
+        // Function to update cart badge
+        function updateCartBadge(count) {
+            const cartIcon = $('#cart-icon');
+            let badge = cartIcon.find('.cart-badge');
+            
+            if (count > 0) {
+                if (badge.length === 0) {
+                    // Create badge if it doesn't exist
+                    badge = $('<span class="cart-badge">' + count + '</span>');
+                    cartIcon.append(badge);
+                } else {
+                    // Update existing badge
+                    badge.text(count);
+                }
+            } else {
+                // Remove badge if count is 0
+                badge.remove();
+            }
+        }
+
+      
+
+        // Function to update wishlist badge
+        function updateWishlistBadge(count) {
+            const wishlistIcon = $('#wishlist-icon');
+            let badge = wishlistIcon.find('.wishlist-badge');
+            
+            if (count > 0) {
+                if (badge.length === 0) {
+                    // Create badge if it doesn't exist
+                    badge = $('<span class="wishlist-badge">' + count + '</span>');
+                    wishlistIcon.append(badge);
+                } else {
+                    // Update existing badge
+                    badge.text(count);
+                }
+            } else {
+                // Remove badge if count is 0
+                badge.remove();
+            }
+        }
+
+        // Function to show notifications (moved to global scope)
+        window.showNotification = function(message, type = 'info') {
+            // Remove existing notifications
+            $('.wishlist-notification').remove();
+            
+            const notificationClass = type === 'success' ? 'alert-success' : 
+                                    type === 'error' ? 'alert-danger' : 
+                                    type === 'warning' ? 'alert-warning' : 'alert-info';
+            
+            const iconClass = type === 'success' ? 'fa-check-circle' : 
+                            type === 'error' ? 'fa-exclamation-circle' : 
+                            type === 'warning' ? 'fa-exclamation-triangle' : 'fa-info-circle';
+            
+            const notification = $(`
+                <div class="wishlist-notification alert ${notificationClass} alert-dismissible fade show" 
+                     style="position: fixed; top: 20px; right: 20px; z-index: 9999; min-width: 300px;">
+                    <i class="fas ${iconClass}"></i> ${message}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            `);
+            
+            $('body').append(notification);
+            
+            // Auto remove after 5 seconds
+            setTimeout(function() {
+                notification.alert('close');
+            }, 5000);
+        };
+
+        // Initialize wishlist status on page load
+        function initializeWishlistStatus() {
+            if (window.isAuthenticated) {
+                $('[id^="wishlist-icon-"]').each(function() {
+                    const bookId = $(this).attr('id').replace('wishlist-icon-', '');
+                    checkWishlistStatus(bookId);
+                });
+            }
+        }
+
+        // Function to check wishlist status for a specific book
+        function checkWishlistStatus(bookId) {
+            $.ajax({
+                url: `/wishlist/check/${bookId}`,
+                method: 'GET',
+                success: function(response) {
+                    if (response.success) {
+                        const wishlistIcon = $(`#wishlist-icon-${bookId}`);
+                        const icon = wishlistIcon.find('i');
+                        
+                        if (response.isInWishlist) {
+                            icon.removeClass('far fa-heart').addClass('fas fa-heart');
+                            wishlistIcon.addClass('in-wishlist');
+                        } else {
+                            icon.removeClass('fas fa-heart').addClass('far fa-heart');
+                            wishlistIcon.removeClass('in-wishlist');
+                        }
+                        
+                        // Update global wishlist count
+                        updateWishlistBadge(response.wishlistCount);
+                    }
+                },
+                error: function() {
+                    // Silently fail for status checks
+                }
+            });
+        }
+
+        // Initialize wishlist on page load
+        initializeWishlistStatus();
+
     }); // End Document Ready Function
 
 

@@ -284,6 +284,10 @@
                                                     <i class="fas fa-language me-2 text-success"></i> 
                                                     <span>{{ $book->language ?? 'N/A' }}</span>
                                                 </div>
+                                                <div class="d-flex align-items-center">
+                                                    <i class="fas fa-language me-2 text-success"></i> 
+                                                    <span>{{ $book->avl_qty ?? 'N/A' }} avl quantity</span>
+                                                </div>
                                             </div>
                                         </div>
                                     </td>
@@ -708,22 +712,7 @@ document.addEventListener('DOMContentLoaded', function() {
         showNotification(`Bulk actions for ${selectedBooks.length} selected books will be implemented here`, 'info');
     });
     
-    // Notification function
-    function showNotification(message, type = 'info') {
-        const notification = document.createElement('div');
-        notification.className = `alert alert-${type} alert-dismissible fade show position-fixed`;
-        notification.style.cssText = 'top: 20px; right: 20px; z-index: 9999; min-width: 300px;';
-        notification.innerHTML = `
-            ${message}
-            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-        `;
-        
-        document.body.appendChild(notification);
-        
-        setTimeout(() => {
-            notification.remove();
-        }, 5000);
-    }
+    // showNotification function is now globally available from main.js
     
     // Add smooth animations
     bookRows.forEach((row, index) => {

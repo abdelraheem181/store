@@ -50,6 +50,7 @@ class BookController extends Controller
             'tags' => 'required|string|max:255',
             'publish_year' => 'required|string|max:255',
             'basic_image_path' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:5000',
+            'avl_qty' => 'required|integer|min:0',
         ]);
 
         //check if the book is already exists
@@ -119,6 +120,7 @@ class BookController extends Controller
             'publish_year' => 'required|string|max:255',
             'basic_image_path' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:5000',
             'tags' => 'nullable|string|max:255',
+            'avl_qty' => 'required|integer|min:0',
         ]);
 
         //upload image

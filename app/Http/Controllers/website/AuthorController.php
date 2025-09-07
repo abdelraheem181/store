@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Website;
 
 use App\Http\Controllers\Controller;
 use App\Models\Author;
+use App\Models\Book;
+use App\Models\Category;
 use Illuminate\Http\Request;
 
 class AuthorController extends Controller
@@ -13,7 +15,17 @@ class AuthorController extends Controller
      */
     public function index()
     {
-        //
+        
+        //get all authors
+        $author = Author::all();
+
+        //get all books
+        $book = Book::all();
+
+        //get all categories
+        $category = Category::all();
+ 
+        return view('website.team', compact('author', 'book', 'category'));
     }
 
     /**
@@ -21,7 +33,7 @@ class AuthorController extends Controller
      */
     public function create()
     {
-        //
+        return view('website.team');
     }
 
     /**
@@ -29,7 +41,7 @@ class AuthorController extends Controller
      */
     public function store(Request $request)
     {
-        //
+     
     }
 
     /**
