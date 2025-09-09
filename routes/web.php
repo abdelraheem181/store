@@ -49,7 +49,8 @@ Route::get('/about', [AboutController::class, 'index'])->name('website.about');
 Route::get('/shop', [ShopController::class, 'index'])->name('website.shop');
 
 //checkout route
-Route::get('/checkout', [CheckoutController::class, 'index'])->name('website.checkout');
+Route::get('/checkout', [CheckoutController::class, 'index'])->name('website.checkout')->middleware('auth');
+Route::post('/checkout', [CheckoutController::class, 'store'])->name('website.checkout.store');
 
 //shop list route
 Route::get('/shop-list', [ShopListController::class, 'index'])->name('website.shop-list');
@@ -94,5 +95,9 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+Route::any('/payment-callback', [CheckoutController::class, 'paymentCallback'])->name('payment.callback');
+
+
 
 require __DIR__.'/auth.php';

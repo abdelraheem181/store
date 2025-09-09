@@ -12,34 +12,12 @@ class Order extends Model
     protected $fillable = [
         'order_number',
         'user_id',
-        'book_id',
-        'country_id',
         'quantity',
-        'status',
-        'subtotal',
-        'tax_amount',
-        'shipping_amount',
-        'discount_amount',
         'total_amount',
-        'shipping_address',
-        'billing_address',
         'payment_status',
         'payment_method',
-        'payment_reference',
-        'shipped_at',
-        'delivered_at'
-    ];
-
-    protected $casts = [
-        'subtotal' => 'decimal:2',
-        'tax_amount' => 'decimal:2',
-        'shipping_amount' => 'decimal:2',
-        'discount_amount' => 'decimal:2',
-        'total_amount' => 'decimal:2',
-        'shipping_address' => 'array',
-        'billing_address' => 'array',
-        'shipped_at' => 'datetime',
-        'delivered_at' => 'datetime'
+        'payment_id',
+      
     ];
 
        protected static function boot()
@@ -75,28 +53,15 @@ class Order extends Model
     }
 
 
-    public function books()
+    public function orderBooks()
     {
-        return $this->belongsToMany(Book::class, 'book_order')
-                    ->withPivot(['quantity', 'unit_price', 'total_price'])
-                    ->withTimestamps();
+        return $this->hasMany(OrderBook::class);
     }
 
 
-    public function country()
-    {
-        return $this->belongsTo(Country::class);
-    }
+ 
 
-    public function orderItems()
-    {
-        return $this->hasMany(CartBooks::class, 'cart_id', 'id');
-    }
 
-    public function cart()
-    {
-        return $this->belongsTo(Cart::class);
-    }
 
     public function scopeByStatus($query, $status)
     {
