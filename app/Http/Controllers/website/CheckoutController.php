@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Website;
 
 use App\Http\Controllers\Controller;
+use App\Mail\PaymentConfirmation;
 use App\Models\Checkout;
 use App\Models\Order;
 use App\Services\TapPaymentService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class CheckoutController extends Controller
 {
@@ -123,7 +125,7 @@ class CheckoutController extends Controller
             
             // Clear the cart session after successful payment
             session()->forget('cart');
-            
+            Mail::to($order->user->email)->send(new PaymentConfirmation($order, $order->user));
             return view('website.success-payment', compact('order'))->with('success', 'Payment successful');
        }
        else{
@@ -133,6 +135,7 @@ class CheckoutController extends Controller
         return view('website.failed-payment')->with('error', 'Payment failed');
         }
        
+  
 
     }
 

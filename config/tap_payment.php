@@ -24,6 +24,6 @@ return [
 
 //     'redirect_url' => 'https://anothercars.com/api/payment-success',
 
-    'redirect_url' => url('payment-callback'),
+    'redirect_url' => env('TAP_PAYMENT_REDIRECT_URL'),
     
 ];
