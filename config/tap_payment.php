@@ -24,6 +24,6 @@ return [
 
 //     'redirect_url' => 'https://anothercars.com/api/payment-success',
 
-    'redirect_url' => 'http://localhost:8000/payment-callback',
+    'redirect_url' => url('payment-callback'),
     
 ];
