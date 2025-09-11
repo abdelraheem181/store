@@ -30,7 +30,8 @@ class Book extends Model
             'tags', 
             'publish_year',
             'basic_image_path',
-            'avl_qty'
+            'avl_qty',
+            'sales_count'
         ];
 
     /**

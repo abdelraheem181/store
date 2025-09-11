@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Mail\PaymentConfirmation;
 use App\Models\Checkout;
 use App\Models\Order;
+use App\Models\Slider;
 use App\Services\TapPaymentService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
@@ -17,7 +18,11 @@ class CheckoutController extends Controller
      */
     public function index()
     {
-        return view('website.checkout');
+
+        //silder
+        $silder = Slider::first();
+
+        return view('website.checkout', compact('silder'));
     }
 
     /**
@@ -120,8 +125,17 @@ class CheckoutController extends Controller
 
        if(isset($charge->status) && $charge->status == 'CAPTURED'){
             $order->update([
-                'payment_status' => 'paid'
+                'payment_status' => 'paid',
+              
+
             ]);
+
+            //update sales count
+           foreach($order->orderBooks as $book) {
+            $order->book->update([
+                'sales_count' => $book->sales_count + $book->quantity
+            ]);
+            }
             
             // Clear the cart session after successful payment
             session()->forget('cart');
@@ -130,7 +144,8 @@ class CheckoutController extends Controller
        }
        else{
         $order->update([
-            'payment_status' => 'failed'
+            'payment_status' => 'failed',
+            'sales_count' => 0
         ]);
         return view('website.failed-payment')->with('error', 'Payment failed');
         }

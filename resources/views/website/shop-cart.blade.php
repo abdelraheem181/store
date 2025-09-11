@@ -5,7 +5,7 @@
    <!-- Breadcumb Section Start -->
    <div class="breadcrumb-wrapper">
       <div class="book1">
-          <img src="{{ asset('img/hero/book1.png') }}" alt="book">
+          <img src="{{ asset($silder->image_path) }}" alt="book" style="width: 500px; height: 300px; object-fit: cover;">
       </div>
       <div class="book2">
           <img src="{{ asset('img/hero/book2.png') }}" alt="book">

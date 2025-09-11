@@ -30,6 +30,7 @@ return new class extends Migration
             $table->string('tags')->nullable();
             $table->string('publish_year')->nullable();
             $table->integer('avl_qty')->nullable();
+            $table->integer('sales_count')->default(0);
             $table->timestamps();
     
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');

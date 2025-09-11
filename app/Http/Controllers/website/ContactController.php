@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Website;
 
 use App\Http\Controllers\Controller;
 use App\Models\Contact;
+use App\Models\Slider;
 use Illuminate\Http\Request;
 
 class ContactController extends Controller
@@ -14,8 +15,11 @@ class ContactController extends Controller
     public function index()
     {
         $contacts = Contact::all();
+
+        //silder
+        $silder = Slider::first();
     
-        return view('website.contact', compact('contacts'));
+        return view('website.contact', compact('contacts', 'silder'));
     }
 
     /**

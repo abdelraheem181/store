@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Website;
 use App\Http\Controllers\Controller;
 
 use App\Models\About;
+use App\Models\Slider;
 use Illuminate\Http\Request;
 
 class AboutController extends Controller
@@ -17,8 +18,12 @@ class AboutController extends Controller
     {
         
         $about = About::first();
+
+        //silder
+        $silder = Slider::first();
+
         //get about data
-        return view('website.about', compact('about'));
+        return view('website.about', compact('about', 'silder'));
     }
 
     /**

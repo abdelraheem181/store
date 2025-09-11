@@ -5,8 +5,10 @@
     <!-- Breadcumb Section Start -->
     <div class="breadcrumb-wrapper">
       <div class="book1">
-          <img src="{{ asset('img/hero/book1.png') }}" alt="book">
+          <img src="{{ asset($silder->image_path) }}" alt="book" style="width: 500px; height: 300px; object-fit: cover;">
+
       </div>
+     
       <div class="book2">
           <img src="{{ asset('img/hero/book2.png') }}" alt="book">
       </div>
@@ -119,18 +121,13 @@
                                         In Stock
                                     </span>
                                     <ul class="list">
-                                        <li data-value="1" class="option selected">
-                                            In Stock
-                                        </li>
-                                        <li data-value="1" class="option">
-                                            Castle In The Sky
-                                        </li>
-                                        <li data-value="1" class="option">
-                                            The Hidden Mystery Behind
-                                        </li>
-                                        <li data-value="1" class="option">
-                                            Flovely And Unicom Erna
-                                        </li>
+                                        @foreach ($book as $item) 
+                                            @if ($item->sales_count > 0)
+                                            <li data-value="1" class="option">
+                                                {{ $item->name }}
+                                            </li>
+                                            @endif
+                                        @endforeach
                                     </ul>
                                 </div>
                             </div>
@@ -140,18 +137,13 @@
                                         On Sale
                                     </span>
                                     <ul class="list">
-                                        <li data-value="1" class="option selected">
-                                            On Sale
-                                        </li>
-                                        <li data-value="1" class="option">
-                                            Flovely And Unicom Erna
-                                        </li>
-                                        <li data-value="1" class="option">
-                                            Castle In The Sky
-                                        </li>
-                                        <li data-value="1" class="option">
-                                            How Deal With Very Bad BOOK
-                                        </li>
+                                        @foreach ($book as $item) 
+                                                @if ($item->sales_count > 0)
+                                                <li data-value="1" class="option">
+                                                        {{ $item->name }}
+                                                 </li>
+                                                 @endif
+                                         @endforeach
                                     </ul>
                                 </div>
                             </div>

@@ -4,7 +4,7 @@
       <!-- Breadcumb Section Start -->
   <div class="breadcrumb-wrapper">
             <div class="book1">
-                <img src="{{ asset('img/hero/book1.png') }}" alt="book">
+                <img src="{{ asset($silder->image_path) }}" alt="book" style="width: 500px; height: 300px; object-fit: cover;">
             </div>
             <div class="book2">
                 <img src="{{ asset('img/hero/book2.png') }}" alt="book">
@@ -68,19 +68,19 @@
                                         <div class="content">
                                             <p>Location</p>
                                             <h3>
-                                                4517 Washington ave.
+                                                Dammam, Saudi Arabia Kin khalees Street
                                             </h3>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="video-image">
-                                          <img src="{{ asset('img/contact.jpg') }}" alt="img">
-                                    <div class="video-box">
+                                          <img src="{{ $silder->image_path }}" alt="img" style="width: 509px; height: 200px; object-fit: cover;">
+                                    {{-- <div class="video-box">
                                         <a href="https://www.youtube.com/watch?v=Cn4G2lZ_g2I"
                                             class="video-btn ripple video-popup">
                                             <i class="fa-solid fa-play"></i>
                                         </a>
-                                    </div>
+                                    </div> --}}
                                 </div>
                             </div>
                         </div>

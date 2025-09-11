@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Website;
 use App\Http\Controllers\Controller;
 use App\Models\Book;
 use App\Models\Cart;
+use App\Models\Slider;
 use Illuminate\Http\Request;
 
 class ShopCartController extends Controller
@@ -12,8 +13,11 @@ class ShopCartController extends Controller
     //index
     public function index()
     {
+        //silder
+        $silder = Slider::first();
+
         $cart = session()->get('cart', []);
-        return view('website.shop-cart', compact('cart'));
+        return view('website.shop-cart', compact('cart', 'silder'));
     }
 
     //add to cart

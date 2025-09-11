@@ -3,14 +3,17 @@
 use App\Http\Controllers\Website\AboutController;
 use App\Http\Controllers\Website\CheckoutController;
 use App\Http\Controllers\Website\ContactController;
+use App\Models\Book;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Website\ShopCartController;
 use App\Http\Controllers\Website\ShopController;
 use App\Http\Controllers\Website\ShopDetailsController;
 use App\Http\Controllers\Website\ShopListController;
+use App\Http\Controllers\Website\DashbordController;
 use App\Http\Controllers\Website\TeamController;
 use App\Http\Controllers\Website\TeamDetailsController;
 use App\Http\Controllers\Website\WishListController;
+use App\Models\Slider;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -24,9 +27,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('website.index');
-})->name('website.index');
+Route::get('/', [DashbordController::class, 'index'])->name('website.index');
+    
+
 
 // Test notification routes (remove these after testing)
 Route::get('/test-success', function () {

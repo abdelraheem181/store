@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Website;
 
 use App\Http\Controllers\Controller;
 use App\Models\Book;
+use App\Models\Slider;
 use App\Models\Wishlist;
 use Illuminate\Http\Request;
 
@@ -17,7 +18,10 @@ class WishListController extends Controller
         // Get wishlist books count
         $wishlistBooksCount = $wishlistBooks->count();
 
-        return view('website.wishlist', compact('wishlistBooks', 'wishlistBooksCount'));
+        //silder
+        $silder = Slider::first();
+
+        return view('website.wishlist', compact('wishlistBooks', 'wishlistBooksCount', 'silder'));
     }
 
     public function addToWishlist(Request $request, $book_id)

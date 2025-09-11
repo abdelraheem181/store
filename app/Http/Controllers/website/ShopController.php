@@ -8,6 +8,7 @@ use App\Models\Book;
 use App\Models\Category;
 use App\Models\Country;
 use App\Models\Shop;
+use App\Models\Slider;
 use Illuminate\Http\Request;
 
 class ShopController extends Controller
@@ -26,7 +27,10 @@ class ShopController extends Controller
         //get all countries
         $country = Country::all();
 
-        return view('website.shop', compact('book', 'category', 'author', 'country'));
+        //silder books
+        $silder = Slider::first() ;
+
+        return view('website.shop', compact('book', 'category', 'author', 'country', 'silder'));
     }
 
     /**

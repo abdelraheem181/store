@@ -694,7 +694,7 @@
                   <div class="content">
                       <p>Location</p>
                       <h3>
-                          4517 Washington ave.
+                          Dammam, Saudi Arabia Kin khalees Street
                       </h3>
                   </div>
               </div>
@@ -710,7 +710,7 @@
                       <div class="single-footer-widget">
                           <div class="widget-head">
                               <a href="index.html">
-                                          <img src="{{ asset('img/logo/white-logo.svg') }}" alt="logo-img">
+                                          <img src="{{ asset('img/logo/white-logo.png') }}" alt="logo-img">
                               </a>
                           </div>
                           <div class="footer-content">

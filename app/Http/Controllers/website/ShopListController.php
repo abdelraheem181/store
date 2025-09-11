@@ -7,6 +7,7 @@ use App\Models\Author;
 use App\Models\Book;
 use App\Models\Category;
 use App\Models\Country;
+use App\Models\Slider;
 use Illuminate\Http\Request;
 
 class ShopListController extends Controller
@@ -26,7 +27,10 @@ class ShopListController extends Controller
         //get all countries
         $country = Country::all();
 
+        //silder books
+        $silder = Slider::latest()->first();
+
         //return view
-        return view('website.shop-list', compact('book', 'category', 'author', 'country'));
+        return view('website.shop-list', compact('book', 'category', 'author', 'country', 'silder'));
     }
 }
