@@ -8,6 +8,7 @@ use App\Models\Book;
 use App\Models\Category;
 use App\Models\Country;
 use App\Models\Rating;
+use App\Models\Slider;
 use Illuminate\Http\Request;
 
 class TeamDetailsController extends Controller
@@ -19,6 +20,9 @@ class TeamDetailsController extends Controller
 
         //get books by author id
         $book = Book::where('author_id', $id)->get();
+
+        //silder
+        $silder = Slider::first();
 
         //books count
         $books_count = Book::where('author_id', $id)->count();
@@ -32,6 +36,6 @@ class TeamDetailsController extends Controller
 
   
 
-        return view('website.team-details', compact('author', 'book', 'books_count'));
+        return view('website.team-details', compact('author', 'book', 'books_count', 'silder'));
     }
 }

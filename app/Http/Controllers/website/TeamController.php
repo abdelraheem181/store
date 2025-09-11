@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Author;
 use App\Models\Book;
 use App\Models\Category;
+use App\Models\Slider;
 use Illuminate\Http\Request;
 
 class TeamController extends Controller
@@ -20,7 +21,10 @@ class TeamController extends Controller
      
              //get all categories
              $category = Category::all();
+
+             //silder
+             $silder = Slider::first();
       
-             return view('website.team', compact('author', 'book', 'category'));
+             return view('website.team', compact('author', 'book', 'category', 'silder'));
     }
 }

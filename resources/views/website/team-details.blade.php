@@ -5,7 +5,7 @@
     <!-- Breadcumb Section Start -->
     <div class="breadcrumb-wrapper">
       <div class="book1">
-          <img src="{{ asset('img/hero/book1.png') }}" alt="book">
+        <img src="{{ asset($silder->image_path) }}" alt="book" style="width: 500px; height: 300px; object-fit: cover;">
       </div>
       <div class="book2">
           <img src="{{ asset('img/hero/book2.png') }}" alt="book">
@@ -84,18 +84,19 @@
           </div>
           <div class="swiper book-slider">
               <div class="swiper-wrapper">
+                @foreach($book as $item)
                   <div class="swiper-slide">
                       <div class="shop-box-items style-2">
                           <div class="book-thumb center">
-                                    <a href="{{ route('website.shop-details') }}"><img src="{{ asset('img/book/01.png') }}" alt="img"></a>
-                              <ul class="post-box">
+                                    <a href="{{ route('website.shop-details') }}"><img src="{{ asset('images/books/' .$item->basic_image_path) }}" alt="img"></a>
+                              {{-- <ul class="post-box">
                                   <li>
                                       Hot
                                   </li>
                                   <li>
                                       -30%
                                   </li>
-                              </ul>
+                              </ul> --}}
                               <ul class="shop-icon d-grid justify-content-center align-items-center">
                                   <li>
                                       <a href="{{ route('website.shop-cart') }}"><i class="far fa-heart"></i></a>
@@ -108,7 +109,7 @@
                                   <li>
                                       <a href="{{ route('website.shop-cart') }}">
 
-                                          <img class="icon" src="{{ asset('img/icon/shuffle.svg') }}" alt="svg-icon">
+                                          <img class="icon" src="{{ asset('assets/img/icon/shuffle.svg') }}" alt="svg-icon">
                                       </a>
                                   </li>
                                   <li>
@@ -117,20 +118,20 @@
                               </ul>
                           </div>
                           <div class="shop-content">
-                              <h5> Design Low Book </h5>
-                              <h3><a href="{{ route('website.shop-details') }}">Simple Things You To <br> Save BOOK</a></h3>
+                              <h5> {{ $item->category->name }} </h5>
+                              <h3><a href="{{ route('website.shop-details') }}"> {{ $item->name }} </a></h3>
                               <ul class="price-list">
-                                  <li>$30.00</li>
+                                  <li>{{ $item->price }}</li>
                                   <li>
-                                      <del>$39.99</del>
+                                      <del>{{ $item->price }}</del>
                                   </li>
                               </ul>
                               <ul class="author-post">
                                   <li class="authot-list">
                                       <span class="thumb">
-                                          <img src="{{ asset('img/testimonial/client-1.png') }}" alt="img">
+                                          <img src="{{ asset('images/authors/' .$item->author->image_path) }}" alt="img" style="width: 50px; height: 50px; object-fit: cover;">
                                       </span>
-                                      <span class="content">Wilson</span>
+                                      <span class="content">{{ $item->author->name }}</span>
                                   </li>
 
                                   <li class="star">
@@ -148,7 +149,8 @@
                           </div>
                       </div>
                   </div>
-                  <div class="swiper-slide">
+                  @endforeach
+                  {{-- <div class="swiper-slide">
                       <div class="shop-box-items style-2">
                           <div class="book-thumb center">
                               <a href="{{ route('website.shop-details') }}"><img src="{{ asset('img/book/02.png') }}" alt="img"></a>
@@ -356,7 +358,7 @@
                                       class="fa-solid fa-basket-shopping"></i> Add To Cart</a>
                           </div>
                       </div>
-                  </div>
+                  </div> --}}
               </div>
           </div>
       </div>
