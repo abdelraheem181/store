@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Website;
 
 use App\Http\Controllers\Controller;
-
+use App\Models\Book;
 use App\Models\Rating;
 use Illuminate\Http\Request;
 
@@ -30,7 +30,23 @@ class RatingController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'rating' => 'required|integer|min:1|max:5',
+            'comment' => 'nullable|string|max:255',
+            'book_id' => 'required|exists:books,id',
+        ]);
+
+        $validated['user_id'] = auth()->id();
+
+         Rating::where('user_id', auth()->id())->where('book_id', $validated['book_id'])->delete();
+        
+        $book = Book::findOrFail($validated['book_id']);
+        $book->ratings()->create($validated);
+
+        return response()->json([
+            'success' => true,
+            'rating' => $book->starRating(),
+        ]);
     }
 
     /**

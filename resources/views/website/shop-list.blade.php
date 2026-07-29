@@ -80,14 +80,7 @@
                                   <div class="shop-list-content">
                                       <h3><a href="{{ route('website.shop-details' , $item->id) }}">{{ $item->name }}</a></h3>
                                       <h5>{{ $item->price }} $</h5> 
-                    
-                                      <div class="star">
-                                          <i class="fa-solid fa-star"></i>
-                                          <i class="fa-solid fa-star"></i>
-                                          <i class="fa-solid fa-star"></i>
-                                          <i class="fa-solid fa-star"></i>
-                                          <i class="fa-regular fa-star"></i>
-                                      </div>
+                                      <x-book-rating :book="$item" />
                                       <p>
                                          {{ $item->description }}
                                       </p>

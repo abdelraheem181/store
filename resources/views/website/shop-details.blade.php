@@ -73,13 +73,7 @@
                                 @endif
                               </h5>
                           </div>
-                          <div class="star">
-                                    <a href="{{ route('website.shop-details') }}"> <i class="fas fa-star"></i></a>
-                              <a href="{{ route('website.shop-details') }}"><i class="fas fa-star"></i></a>
-                              <a href="{{ route('website.shop-details') }}"> <i class="fas fa-star"></i></a>
-                              <a href="{{ route('website.shop-details') }}"><i class="fa-regular fa-star"></i></a>
-                              <span>(1 Customer Reviews)</span>
-                          </div>
+                          <x-book-rating :book="$book" />
                           <p>
                            {{ $book->description }}
                           </p>

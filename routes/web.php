@@ -10,6 +10,7 @@ use App\Http\Controllers\Website\ShopController;
 use App\Http\Controllers\Website\ShopDetailsController;
 use App\Http\Controllers\Website\ShopListController;
 use App\Http\Controllers\Website\DashbordController;
+use App\Http\Controllers\Website\RatingController;
 use App\Http\Controllers\Website\TeamController;
 use App\Http\Controllers\Website\TeamDetailsController;
 use App\Http\Controllers\Website\WishListController;
@@ -86,6 +87,9 @@ Route::patch('/cart/update', [ShopCartController::class, 'updateCart'])->name('c
 Route::delete('/cart/remove', [ShopCartController::class, 'removeFromCart'])->name('cart.remove');
 Route::delete('/cart/remove-session/{book_id}', [ShopCartController::class, 'removeFromSessionCart'])->name('cart.remove-session');
 Route::get('/cart', [ShopCartController::class, 'cart'])->name('cart.index');
+
+//ratings   
+Route::post('/rating', [RatingController::class, 'store'])->name('website.rating.store');
 
 
 

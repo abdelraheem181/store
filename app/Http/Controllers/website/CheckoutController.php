@@ -131,10 +131,9 @@ class CheckoutController extends Controller
             ]);
 
             //update sales count
-           foreach($order->orderBooks as $book) {
-            $order->book->update([
-                'sales_count' => $book->sales_count + $book->quantity
-            ]);
+            
+           foreach($order->orderBooks as $orderBook) {
+            $orderBook->book->increment('sales_count', $orderBook->quantity);
             }
             
             // Clear the cart session after successful payment

@@ -86,6 +86,15 @@ class Book extends Model
         return $this->hasMany(Rating::class);
     }
 
+    public function starRating()
+    {
+        if($this->ratings()->count() == 0) {
+            return 0;
+        }
+        
+        return round($this->ratings()->sum('rating') / $this->ratings()->count(), 1);
+    }
+
     public function wishlists()
     {
         return $this->hasMany(Wishlist::class);

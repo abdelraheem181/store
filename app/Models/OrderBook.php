@@ -26,4 +26,6 @@ class OrderBook extends Model
     {
         return $this->belongsTo(Book::class);
     }
+
+    
 }
